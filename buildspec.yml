@@ -1,7 +1,7 @@
 version: 0.1
 environment_variables:
     plaintext:
-        S3_BUCKET: "portal-web-ui"
+        S3_BUCKET: "portal-webui"
         BUILD_ENV: "prod"
 phases:
     install:
