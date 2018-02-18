@@ -1,0 +1,11 @@
+@import "../variables";
+
+.container {
+  height: calc(100vh - 64px);
+  width: 100vw;
+  background-color: $background;
+}
+
+.mobile-container {
+  height: calc(100vh - 56px);
+}
