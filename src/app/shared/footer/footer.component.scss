@@ -1,0 +1,11 @@
+@import "../../../variables";
+
+mat-toolbar {
+  bottom: 0;
+  background-color: $dark;
+  color: white;
+}
+
+.mobile {
+  font-size: 16px;
+}
