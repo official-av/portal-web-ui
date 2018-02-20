@@ -3,6 +3,9 @@
     text-decoration: none;
     cursor: pointer;
   }
+  a:visited {
+    color: inherit;
+  }
 
   &:active, :focus {
     outline: none !important;

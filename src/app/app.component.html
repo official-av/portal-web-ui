@@ -1,6 +1,13 @@
-<app-header></app-header>
-<div class="container" ngClass.xs="mobile-container">
-  <router-outlet></router-outlet>
-</div>
-<app-footer></app-footer>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="push" position="end">
+    <app-sidenav (sidenavClose)="sidenav.close()"></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <div class="container" ngClass.xs="mobile-container">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 

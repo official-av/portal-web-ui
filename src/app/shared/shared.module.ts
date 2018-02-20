@@ -7,11 +7,12 @@ import {AboutComponent} from './static/about/about.component';
 import {ContactComponent} from './static/contact/contact.component';
 import {HelpComponent} from './static/help/help.component';
 import {AppRoutingModule} from '../app-routing.module';
+import {SidenavComponent} from './sidenav/sidenav.component';
 
 @NgModule({
   imports: [MaterialModule, FlexLayoutModule, AppRoutingModule],
-  exports: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent],
-  declarations: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent]
+  exports: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent],
+  declarations: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent]
 })
 export class SharedModule {
 }
