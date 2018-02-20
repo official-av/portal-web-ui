@@ -1,3 +1,14 @@
-<mat-toolbar color="primary">
-  <span>Parliament Portal</span>
+<mat-toolbar color="primary" fxLayoutGap="50px">
+  <div>Parliament Portal</div>
+  <div fxFlex class="nav-links" fxLayoutGap="20px" fxLayoutAlign="center center" fxHide.xs7>
+    <a>Home</a>
+    <a routerLink="about">About</a>
+    <a routerLink="contact">Contact</a>
+    <a routerLink="help">Help</a>
+  </div>
+  <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.xs>
+    <a>Login</a>
+    <a>Register</a>
+    <a>Logout</a>
+  </div>
 </mat-toolbar>
