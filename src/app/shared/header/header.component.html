@@ -1,3 +1,19 @@
-<mat-toolbar color="primary">
-  <span>Parliament Portal</span>
+<mat-toolbar color="primary" fxLayoutGap="50px">
+  <div>Parliament Portal</div>
+  <div fxFlex class="nav-links" fxLayoutGap="20px" fxLayoutAlign="center center" fxHide.xs>
+    <a routerLink="" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Home</a>
+    <a routerLink="about" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">About</a>
+    <a routerLink="contact" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Contact</a>
+    <a routerLink="help" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Help</a>
+  </div>
+  <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.xs>
+    <a>Login</a>
+    <a>Register</a>
+    <a>Logout</a>
+  </div>
+  <div fxFlex fxLayoutAlign="end" fxHide.gt-xs>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

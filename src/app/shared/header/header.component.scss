@@ -1,6 +1,20 @@
+@import "../../../variables";
+
 mat-toolbar {
   position: absolute;
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  .nav-links {
+    a {
+      font-size: 16px;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.active {
+  color: $primary;
 }

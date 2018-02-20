@@ -1,11 +1,18 @@
 @import "../variables";
 
+mat-sidenav {
+  width: 50vw;
+}
+
 .container {
+  top: 64px;
+  position: relative;
   height: calc(100vh - 64px);
   width: 100vw;
   background-color: $background;
 }
 
 .mobile-container {
+  top: 56px;
   height: calc(100vh - 56px);
 }
