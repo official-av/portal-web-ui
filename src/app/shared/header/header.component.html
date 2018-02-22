@@ -7,8 +7,8 @@
     <a routerLink="help" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Help</a>
   </div>
   <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.lt-md>
-    <a>Login</a>
-    <a>Register</a>
+    <a (click)="modalService.openLoginModal()">Login</a>
+    <a routerLink="register" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Register</a>
     <a>Logout</a>
   </div>
   <div fxFlex fxLayoutAlign="end" fxHide.gt-sm>

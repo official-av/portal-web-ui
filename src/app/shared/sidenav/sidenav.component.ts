@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ModalsService} from '../../modals.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,7 +9,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class SidenavComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter<void>();
 
-  constructor() {
+  constructor(public modalService: ModalsService) {
   }
 
   ngOnInit() {

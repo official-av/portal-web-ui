@@ -9,6 +9,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SharedModule} from './shared/shared.module';
 import {AuthModule} from './auth/auth.module';
+import {ModalsService} from './modals.service';
+import {LoginComponent} from './auth/login/login.component';
 
 
 @NgModule({
@@ -26,8 +28,9 @@ import {AuthModule} from './auth/auth.module';
     SharedModule,
     AuthModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ModalsService],
+  bootstrap: [AppComponent],
+  entryComponents: [LoginComponent]
 })
 export class AppModule {
 }

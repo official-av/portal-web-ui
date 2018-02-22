@@ -8,6 +8,7 @@ import {ContactComponent} from './static/contact/contact.component';
 import {HelpComponent} from './static/help/help.component';
 import {AppRoutingModule} from '../app-routing.module';
 import {SidenavComponent} from './sidenav/sidenav.component';
+import {ModalsService} from '../modals.service';
 
 @NgModule({
   imports: [MaterialModule, FlexLayoutModule, AppRoutingModule],
