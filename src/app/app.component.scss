@@ -1,7 +1,10 @@
 @import "../variables";
 
-mat-sidenav {
-  width: 50vw;
+mat-sidenav-container {
+  width: 100vw;
+  mat-sidenav {
+    width: 50vw;
+  }
 }
 
 .container {

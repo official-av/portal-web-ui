@@ -1,0 +1,17 @@
+@import "../../../variables";
+
+mat-card {
+  width: max-content;
+  mat-card-actions {
+    margin-left: 1px;
+  }
+
+  a {
+    margin: auto;
+    text-align: right;
+    margin-right: 15px;
+  }
+  a:hover {
+    color: $primary;
+  }
+}

@@ -8,6 +8,7 @@ import {MaterialModule} from './material.module';
 import {AppRoutingModule} from './app-routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SharedModule} from './shared/shared.module';
+import {AuthModule} from './auth/auth.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {SharedModule} from './shared/shared.module';
 
     // custom modules
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@
 
 @include mat-core();
 
-$portal-app-primary: mat-palette($mat-grey, A100);
+$portal-app-primary: mat-palette($mat-indigo,500, 400, 600);
 $portal-app-accent: mat-palette($mat-orange, 500, 400, 600);
 
 // The warn palette is optional (defaults to red).
