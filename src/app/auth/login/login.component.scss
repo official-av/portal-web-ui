@@ -1,0 +1,32 @@
+@import "../../../variables";
+
+mat-card {
+  box-shadow: unset !important;
+  width: 400px;
+  margin: auto;
+  mat-card-actions {
+    margin-left: 1px;
+  }
+
+  a {
+    margin: auto;
+    text-align: right;
+    margin-right: 15px;
+  }
+  a:hover {
+    color: $primary;
+  }
+}
+
+.mobile-view {
+  padding-left: 0;
+  max-width: 90%;
+  button {
+    margin: 10px 0;
+  }
+  a {
+    margin: unset;
+    padding-top: 5px;
+    text-align: center;
+  }
+}
