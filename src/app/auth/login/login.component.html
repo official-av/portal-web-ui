@@ -16,7 +16,8 @@
     </mat-card-content>
     <mat-card-actions fxLayout.xs="column">
       <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Login</button>
-      <button mat-raised-button type="button" color="warn">Register</button>
+      <button mat-raised-button type="button" color="warn" routerLink="/register" (click)="onRegister()">Register
+      </button>
       <a role="button" fxFlex>Forgot Password?</a>
     </mat-card-actions>
   </form>

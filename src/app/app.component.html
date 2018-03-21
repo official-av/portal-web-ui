@@ -4,7 +4,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-    <div class="container" ngClass.xs="mobile-container">
+    <div class="container" ngClass.xs="mobile-container" fxLayoutAlign="center space-around">
       <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>

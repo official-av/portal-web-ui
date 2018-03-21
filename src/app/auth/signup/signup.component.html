@@ -1,3 +1,71 @@
-<p>
-  signup works!
-</p>
+<section>
+  <mat-card>
+    <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutGap="20px">
+          <ng-template matStepLabel>Fill out your name,email and contact details</ng-template>
+          <section fxLayoutGap="10px">
+            <mat-form-field>
+              <input matInput placeholder="First name" formControlName="firstname">
+              <mat-error *ngIf="!firstFormGroup.get('firstname').value">First Name shouldn't be empty</mat-error>
+              <mat-error>Invalid value</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Last name" formControlName="lastname">
+              <mat-error *ngIf="!firstFormGroup.get('lastname').value">Last Name shouldn't be empty</mat-error>
+              <mat-error>Invalid value</mat-error>
+            </mat-form-field>
+          </section>
+          <section fxLayoutGap="10px">
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="!firstFormGroup.get('email').value">Email shouldn't be empty</mat-error>
+              <mat-error>Email is Invalid</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Contact" formControlName="contact">
+              <mat-error *ngIf="!firstFormGroup.get('contact').value">Contact shouldn't be empty</mat-error>
+              <mat-error>Contact is Invalid</mat-error>
+            </mat-form-field>
+          </section>
+          <div>
+            <button mat-raised-button type="button" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Select your Department and a Username</ng-template>
+          <section fxLayoutGap="10px">
+            <mat-form-field>
+              <input type="text" placeholder="Select a Department" matInput formControlName="dept"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let dept of filteredDepts|async" [value]="dept">
+                  {{ dept }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Username" formControlName="username">
+              <mat-error *ngIf="!secondFormGroup.get('username').value">User Name shouldn't be empty</mat-error>
+              <mat-error>User name should be alphanumeric only</mat-error>
+            </mat-form-field>
+          </section>
+          <div>
+            <button mat-raised-button matStepperPrevious type="button">Back</button>
+            <button mat-raised-button matStepperNext type="button">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        Click Submit to submit details.
+        <div>
+          <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+          <button mat-raised-button type="button" (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+</section>
