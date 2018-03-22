@@ -4,9 +4,9 @@
     <mat-card-subtitle>Enter your email and Password to login</mat-card-subtitle>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
       <mat-form-field>
-        <input matInput type="email" formControlName="email" placeholder="Your Email">
-        <mat-error *ngIf="!loginForm.get('email').value">Email shouldn't be empty</mat-error>
-        <mat-error>Email is Invalid</mat-error>
+        <input matInput formControlName="username" placeholder="Your username">
+        <mat-error *ngIf="!loginForm.get('username').value">Username shouldn't be empty</mat-error>
+        <mat-error>Username is Invalid</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput type="password" formControlName="password" placeholder="Your Password">

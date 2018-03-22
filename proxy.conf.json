@@ -1,0 +1,10 @@
+{
+  "/url": {
+    "target": "http://portal-web-api.us-east-1.elasticbeanstalk.com/",
+    "secure": false,
+    "pathRewrite": {
+      "^/url": ""
+    },
+    "changeOrigin": true
+  }
+}
