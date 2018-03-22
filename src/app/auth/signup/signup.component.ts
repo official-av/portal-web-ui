@@ -29,7 +29,9 @@ export class SignupComponent implements OnInit {
     });
     this.secondFormGroup = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z0-9]+'), Validators.minLength(8)]),
-      'dept': new FormControl(null, Validators.required)
+      'dept': new FormControl(null, Validators.required),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(8), this.confirmPasswordValidator2.bind(this)]),
+      'cnf_password': new FormControl(null, [Validators.required, Validators.minLength(8), this.confirmPasswordValidator.bind(this)]),
     });
     this.filteredDepts = this.secondFormGroup.controls['dept'].valueChanges
       .pipe(startWith(''), map(val => this.filter(val)));
@@ -37,6 +39,24 @@ export class SignupComponent implements OnInit {
 
   filter(val: string): string[] {
     return this.depts.filter(dept => dept.indexOf(val) === 0);
+  }
+
+  confirmPasswordValidator(control: FormControl): { [s: string]: boolean } {
+    if (this.secondFormGroup && control.value !== this.secondFormGroup.get('password').value) {
+      return {'differentPasswords': true};
+    } else {
+      return null;
+    }
+  }
+
+  confirmPasswordValidator2(control: FormControl): { [s: string]: boolean } {
+    if (this.secondFormGroup
+      && (control.value !== this.secondFormGroup.get('cnf_password').value
+        && this.secondFormGroup.get('cnf_password').value)) {
+      return {'differentPasswords': true};
+    } else {
+      return null;
+    }
   }
 
   onSubmit() {
