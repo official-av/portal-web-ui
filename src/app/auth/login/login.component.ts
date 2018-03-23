@@ -24,8 +24,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm);
-    this.authService.login(this.loginForm.value.username, this.loginForm.value.password);
+    this.authService.login(this.loginForm.value.username,
+      this.loginForm.value.password)
+      .then(msg => console.log(msg))
+      .then(() => {
+        this.dialogRef.close();
+      })
+      .catch(error => console.log(error));
   }
 
   onRegister() {

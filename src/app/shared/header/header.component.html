@@ -7,9 +7,10 @@
     <a routerLink="help" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Help</a>
   </div>
   <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.lt-md>
-    <a (click)="modalService.openLoginModal()">Login</a>
-    <a routerLink="register" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Register</a>
-    <a>Logout</a>
+    <a *ngIf="!authService.isAuthenticated()" (click)="modalService.openLoginModal()">Login</a>
+    <a *ngIf="!authService.isAuthenticated()" routerLink="register" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{'exact':'true'}">Register</a>
+    <a *ngIf="authService.isAuthenticated()" (click)="authService.logout()">Logout</a>
   </div>
   <div fxFlex fxLayoutAlign="end" fxHide.gt-sm>
     <button mat-icon-button (click)="toggleSidenav()">

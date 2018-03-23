@@ -1,6 +1,6 @@
 <section>
   <mat-card>
-    <mat-vertical-stepper [linear]="false" #stepper="matVerticalStepper">
+    <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutGap="20px">
           <ng-template matStepLabel>Fill out your name,email and contact details</ng-template>
@@ -57,11 +57,6 @@
               <input matInput type="password" formControlName="password" placeholder="Your Password">
               <mat-error *ngIf="!secondFormGroup.get('password').value">Password shouldn't be empty</mat-error>
               <mat-error
-                *ngIf="secondFormGroup.get('password').errors&&secondFormGroup.get('password').errors['differentPasswords']">
-                Passwords do not
-                match
-              </mat-error>
-              <mat-error
                 *ngIf="secondFormGroup.get('password').value && secondFormGroup.get('password').value.length<8">Password
                 is Invalid
               </mat-error>
@@ -71,7 +66,7 @@
               <mat-error *ngIf="!secondFormGroup.get('cnf_password').value">Confirm Password shouldn't be empty
               </mat-error>
               <mat-error
-                *ngIf="secondFormGroup.get('cnf_password').errors&&secondFormGroup.get('cnf_password').errors['differentPasswords']">
+                *ngIf="secondFormGroup.get('cnf_password').value && secondFormGroup.get('cnf_password').errors&&secondFormGroup.get('cnf_password').errors['differentPasswords']">
                 Passwords do not
                 match
               </mat-error>

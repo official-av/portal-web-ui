@@ -15,14 +15,15 @@
      (click)="closeSidenav()">
     <mat-icon>help</mat-icon>
     <span class="nav-caption">Help</span></a>
-  <a mat-list-item (click)="closeSidenav();modalService.openLoginModal()">
+  <a *ngIf="!authService.isAuthenticated()" mat-list-item (click)="closeSidenav();modalService.openLoginModal()">
     <mat-icon>visibility</mat-icon>
     <span class="nav-caption">Login</span></a>
-  <a mat-list-item (click)="closeSidenav()" routerLink="register" [routerLinkActive]="'active'"
+  <a *ngIf="!authService.isAuthenticated()" mat-list-item (click)="closeSidenav()" routerLink="register"
+     [routerLinkActive]="'active'"
      [routerLinkActiveOptions]="{'exact':'true'}">
     <mat-icon>verified_user</mat-icon>
     <span class="nav-caption">Register</span></a>
-  <a mat-list-item (click)="closeSidenav()">
+  <a *ngIf="authService.isAuthenticated()" mat-list-item (click)="closeSidenav();authService.logout()">
     <mat-icon>visibility_off</mat-icon>
     <span class="nav-caption">Logout</span></a>
 
