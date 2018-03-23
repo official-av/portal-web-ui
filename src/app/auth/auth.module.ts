@@ -6,6 +6,8 @@ import {MaterialModule} from '../material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from './auth.service';
 
 @NgModule({
   imports: [
@@ -13,10 +15,12 @@ import {CommonModule} from '@angular/common';
     MaterialModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   exports: [LoginComponent, SignupComponent],
-  declarations: [LoginComponent, SignupComponent]
+  declarations: [LoginComponent, SignupComponent],
+  providers: [AuthService]
 })
 
 export class AuthModule {

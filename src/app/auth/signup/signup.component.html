@@ -52,6 +52,26 @@
               <mat-error>User name should be alphanumeric only</mat-error>
             </mat-form-field>
           </section>
+          <section fxLayoutGap="10px">
+            <mat-form-field>
+              <input matInput type="password" formControlName="password" placeholder="Your Password">
+              <mat-error *ngIf="!secondFormGroup.get('password').value">Password shouldn't be empty</mat-error>
+              <mat-error
+                *ngIf="secondFormGroup.get('password').value && secondFormGroup.get('password').value.length<8">Password
+                is Invalid
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="password" formControlName="cnf_password" placeholder="Your Password">
+              <mat-error *ngIf="!secondFormGroup.get('cnf_password').value">Confirm Password shouldn't be empty
+              </mat-error>
+              <mat-error
+                *ngIf="secondFormGroup.get('cnf_password').value && secondFormGroup.get('cnf_password').errors&&secondFormGroup.get('cnf_password').errors['differentPasswords']">
+                Passwords do not
+                match
+              </mat-error>
+            </mat-form-field>
+          </section>
           <div>
             <button mat-raised-button matStepperPrevious type="button">Back</button>
             <button mat-raised-button matStepperNext type="button">Next</button>

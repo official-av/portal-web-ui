@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ModalsService} from '../../modals.service';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import {ModalsService} from '../../modals.service';
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(public modalService: ModalsService) {
+  constructor(public modalService: ModalsService,private authService:AuthService) {
   }
 
   ngOnInit() {
