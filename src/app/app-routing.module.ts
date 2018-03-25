@@ -4,6 +4,7 @@ import {AboutComponent} from './shared/static/about/about.component';
 import {HelpComponent} from './shared/static/help/help.component';
 import {ContactComponent} from './shared/static/contact/contact.component';
 import {SignupComponent} from './auth/signup/signup.component';
+import {ProfileviewComponent} from './profile/profileview/profileview.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: SignupComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileviewComponent
   }
 ];
 

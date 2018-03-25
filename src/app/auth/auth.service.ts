@@ -3,10 +3,22 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {RegisterUser} from './registerUser.interface';
 import {Router} from '@angular/router';
+import {User} from '../profile/user.model';
 
 @Injectable()
 export class AuthService {
   private auth_token: string = null;
+  private user: User = {
+    username: 'random123',
+    dept_id: '1234',
+    firstname: 'John',
+    lastname: 'Doe',
+    email: 'johndoe@test.com',
+    contact: 7778889990,
+    status: false,
+    contact_verified: true,
+    email_verified: true
+  };
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -39,5 +51,13 @@ export class AuthService {
   logout() {
     this.auth_token = null;
     this.router.navigate(['']);
+  }
+
+  openForgot() {
+
+  }
+
+  getUserDetails() {
+    return {...this.user};
   }
 }

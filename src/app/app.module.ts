@@ -11,6 +11,8 @@ import {SharedModule} from './shared/shared.module';
 import {AuthModule} from './auth/auth.module';
 import {ModalsService} from './modals.service';
 import {LoginComponent} from './auth/login/login.component';
+import {ProfileModule} from './profile/profile.module';
+import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -26,11 +28,12 @@ import {LoginComponent} from './auth/login/login.component';
     // custom modules
     AppRoutingModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    ProfileModule
   ],
   providers: [ModalsService],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent]
+  entryComponents: [LoginComponent, ResetPasswordComponent]
 })
 export class AppModule {
 }
