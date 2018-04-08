@@ -7,6 +7,7 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {ProfileviewComponent} from './profile/profileview/profileview.component';
 import {DashboardComponent} from './core/dashboard/dashboard.component';
 import {QuestionsComponent} from './core/questions/questions.component';
+import {CreateComponent} from './core/create/create.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'questions/:mode',
     component: QuestionsComponent
+  },
+  {
+    path: 'create',
+    component: CreateComponent
   }
 ];
 

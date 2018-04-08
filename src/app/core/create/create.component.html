@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title>Create Question</mat-card-title>
+  <mat-card-subtitle>Ask Question from a Department</mat-card-subtitle>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm" fxLayoutGap="5px" fxLayout="column">
+      <mat-form-field class="content">
+        <textarea matInput placeholder="Question Content" name="content" [(ngModel)]="question.content"></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Choose Department" name="dept" [(ngModel)]="question.asked_to">
+          <mat-option *ngFor="let dept of depts" [value]="dept.id">
+            {{ dept.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Reply Deadline" [matDatepicker]="picker" name="deadline"
+               [(ngModel)]="question.deadline">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>
