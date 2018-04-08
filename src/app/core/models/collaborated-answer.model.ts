@@ -1,5 +1,5 @@
 export class CollaboratedAnswer {
-  ques_id: string;
-  asked_to: string;
+  asked_on: string;
   rec_answer: string;
+  answered_on: string;
 }

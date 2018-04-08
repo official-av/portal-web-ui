@@ -6,6 +6,7 @@ import {ContactComponent} from './shared/static/contact/contact.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {ProfileviewComponent} from './profile/profileview/profileview.component';
 import {DashboardComponent} from './core/dashboard/dashboard.component';
+import {QuestionsComponent} from './core/questions/questions.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: DashboardComponent
+  },
+  {
+    path: 'questions/:mode',
+    component: QuestionsComponent
   }
 ];
 
