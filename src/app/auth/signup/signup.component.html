@@ -1,6 +1,7 @@
 <section>
   <mat-card>
     <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
+      <!--first step - name, contact, email-->
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup" fxLayout="column" fxLayoutGap="20px">
           <ng-template matStepLabel>Fill out your name,email and contact details</ng-template>
@@ -33,6 +34,7 @@
           </div>
         </form>
       </mat-step>
+      <!--second step - dept,username,pwd and cnf pwd-->
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Select your Department and a Username</ng-template>

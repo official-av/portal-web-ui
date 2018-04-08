@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<LoginComponent>, private router: Router, private authService: AuthService) {
   }
 
-  // TODO: add service and integrate with backend
   ngOnInit() {
     this.loginForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z0-9]+'), Validators.minLength(8)]),

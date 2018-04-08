@@ -9,9 +9,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 export class ResetPasswordComponent implements OnInit {
   mode: 'forgot' | 'change';
-  otpCompleted:boolean=false;
+  otpCompleted = false;
   currentPasswordFormGroup: FormGroup;
   resetPasswordFormGroup: FormGroup;
+
+  // TODO: Fix step complete issue (bug click two times on otp submit)
 
   constructor(public dialogRef: MatDialogRef<ResetPasswordComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.mode = this.data.mode;

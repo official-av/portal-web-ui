@@ -1,7 +1,11 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title><h2>Welcome, {{temp_user.firstname}} {{temp_user.lastname}}</h2></mat-card-title>
-    <mat-card-subtitle><h3>{{sharedService.getDeptList().get(temp_user.dept_id)}}</h3></mat-card-subtitle>
+    <mat-card-title>
+      <h2>Welcome, {{temp_user.firstname}} {{temp_user.lastname}}</h2>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <h3>{{sharedService.getDeptList().get(temp_user.dept_id)}}</h3>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="profileForm">

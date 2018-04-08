@@ -44,6 +44,7 @@ export class SignupComponent implements OnInit {
     return this.depts.filter(dept => dept.indexOf(val) === 0);
   }
 
+  // TODO: Optimize - create seperate pwd + cnf pwd component?
   confirmPasswordValidator(control: FormControl): { [s: string]: boolean } {
     if (this.secondFormGroup && control.value !== this.secondFormGroup.get('password').value) {
       return {'differentPasswords': true};

@@ -3,11 +3,13 @@
     <mat-card-title>Login</mat-card-title>
     <mat-card-subtitle>Enter your email and Password to login</mat-card-subtitle>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <!--username-->
       <mat-form-field>
         <input matInput formControlName="username" placeholder="Your username">
         <mat-error *ngIf="!loginForm.get('username').value">Username shouldn't be empty</mat-error>
         <mat-error>Username is Invalid</mat-error>
       </mat-form-field>
+      <!--password-->
       <mat-form-field>
         <input matInput type="password" formControlName="password" placeholder="Your Password">
         <mat-error *ngIf="!loginForm.get('password').value">Password shouldn't be empty</mat-error>
@@ -18,6 +20,7 @@
       <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Login</button>
       <button mat-raised-button type="button" color="warn" routerLink="/register" (click)="onRegister()">Register
       </button>
+      <!--forgot password-->
       <a role="button" fxFlex (click)="dialogRef.close('forgot');">Forgot Password?</a>
     </mat-card-actions>
   </form>

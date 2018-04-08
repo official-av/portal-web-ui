@@ -5,6 +5,7 @@ import {HelpComponent} from './shared/static/help/help.component';
 import {ContactComponent} from './shared/static/contact/contact.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {ProfileviewComponent} from './profile/profileview/profileview.component';
+import {DashboardComponent} from './core/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileviewComponent
+  },
+  {
+    path: 'home',
+    component: DashboardComponent
   }
 ];
 

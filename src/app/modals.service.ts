@@ -13,8 +13,9 @@ export class ModalsService {
       width: '500px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'forgot')
+      if (result === 'forgot') {
         this.openPasswordResetModal('forgot');
+      }
     });
   }
 

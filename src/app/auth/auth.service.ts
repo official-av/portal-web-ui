@@ -29,7 +29,8 @@ export class AuthService {
         .subscribe(result => resolve('success'),
           error => reject(error));
     });
-    // TODO: redirect after register
+    // TODO: open login modal
+    // TODO: Add error notifications
   }
 
   login(uname: string, pwd: string) {
@@ -42,6 +43,8 @@ export class AuthService {
         resolve('success');
       }, error => reject(error));
     });
+    // TODO: redirect to dashboard after login/profile (if inactive)
+    // TODO: Add error notifications
   }
 
   isAuthenticated() {
@@ -50,11 +53,8 @@ export class AuthService {
 
   logout() {
     this.auth_token = null;
+    this.user = null;
     this.router.navigate(['']);
-  }
-
-  openForgot() {
-
   }
 
   getUserDetails() {

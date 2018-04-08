@@ -13,6 +13,7 @@ import {ModalsService} from './modals.service';
 import {LoginComponent} from './auth/login/login.component';
 import {ProfileModule} from './profile/profile.module';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
+import {CoreModule} from './core/core.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {ResetPasswordComponent} from './auth/reset-password/reset-password.compo
     AppRoutingModule,
     SharedModule,
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    CoreModule
   ],
   providers: [ModalsService],
   bootstrap: [AppComponent],

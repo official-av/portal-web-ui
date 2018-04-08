@@ -11,7 +11,8 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatStepperModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTableModule
 } from '@angular/material';
 
 @NgModule({
