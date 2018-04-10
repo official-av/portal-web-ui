@@ -1,3 +1,44 @@
-<p>
-  reply works!
-</p>
+<section fxLayoutGap="20px" fxLayout="row">
+  <mat-card class="primary">
+    <mat-card-title>Create Reply</mat-card-title>
+    <mat-card-subtitle *ngIf="mode==='invited'">
+      Invited by {{question.asked_to}}
+    </mat-card-subtitle>
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <form (ngSubmit)="sendReply(f)" #f="ngForm">
+        <section>
+          <span>Question Content</span>
+          <p>{{question.content}}</p>
+        </section>
+        <mat-divider></mat-divider>
+        <mat-form-field class="content" *ngIf="mode==='direct';else invited">
+          <textarea matInput placeholder="Reply" name="answer" [(ngModel)]="question.answer"></textarea>
+        </mat-form-field>
+        <ng-template #invited>
+          <mat-form-field>
+            <textarea matInput placeholder="Reply" name="answer"
+                      [(ngModel)]="question.collaborations[0].rec_answer"></textarea>
+          </mat-form-field>
+        </ng-template>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="secondary" *ngIf="mode==='direct'&&question.collaborations">
+    <mat-card-title>Available Replies
+    </mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <ng-container *ngFor="let collab of question.collaborations;let i=index">
+        <div fxLayout="column" fxLayoutGap="10px">
+          <section fxLayoutGap="5px">
+            <span>Answered by {{coreService.getDeptName(collab.asked_to)}}</span>
+            <span>Answered On {{collab.answered_on}}</span>
+          </section>
+          <p>{{collab.rec_answer}}</p>
+        </div>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</section>
+

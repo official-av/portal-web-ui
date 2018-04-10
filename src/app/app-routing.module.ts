@@ -8,6 +8,7 @@ import {ProfileviewComponent} from './profile/profileview/profileview.component'
 import {DashboardComponent} from './core/dashboard/dashboard.component';
 import {QuestionsComponent} from './core/questions/questions.component';
 import {CreateComponent} from './core/create/create.component';
+import {ReplyComponent} from './core/reply/reply.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateComponent
+  },
+  {
+    path: 'reply/:mode/:ques_id',
+    component: ReplyComponent
   }
 ];
 

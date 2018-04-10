@@ -2,9 +2,10 @@
 
 mat-toolbar {
   bottom: 0;
-  position: relative;
+  position: fixed;
   background-color: $dark;
   color: white;
+  height: 40px !important;
 }
 
 .mobile {

@@ -35,7 +35,7 @@
         <ng-container matColumnDef="Reply">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Reply</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button mat-button>Reply</button>
+            <button mat-button [routerLink]="['/reply','direct',element.ques_id]">Reply</button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="directColumns"></mat-header-row>
@@ -69,7 +69,7 @@
         <ng-container matColumnDef="Reply">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Reply</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button mat-button>Reply</button>
+            <button mat-button [routerLink]="['/reply','invited',element.ques_id]">Reply</button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="invitedColumns"></mat-header-row>
