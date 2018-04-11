@@ -14,6 +14,11 @@ import {LoginComponent} from './auth/login/login.component';
 import {ProfileModule} from './profile/profile.module';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 import {CoreModule} from './core/core.module';
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 
 @NgModule({
@@ -25,6 +30,7 @@ import {CoreModule} from './core/core.module';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
+    PerfectScrollbarModule,
 
     // custom modules
     AppRoutingModule,
@@ -33,7 +39,13 @@ import {CoreModule} from './core/core.module';
     ProfileModule,
     CoreModule
   ],
-  providers: [ModalsService],
+  providers: [
+    ModalsService,
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent, ResetPasswordComponent]
 })

@@ -4,10 +4,14 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-    <div class="container" ngClass.xs="mobile-container" fxLayoutAlign="center space-around">
-      <router-outlet></router-outlet>
-    </div>
-    <app-footer></app-footer>
+    <section style="position:relative;">
+      <div class="container" ngClass.xs="mobile-container" fxLayoutAlign="center space-around">
+        <perfect-scrollbar>
+          <router-outlet></router-outlet>
+        </perfect-scrollbar>
+      </div>
+      <app-footer></app-footer>
+    </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
