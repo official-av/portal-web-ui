@@ -1,3 +1,13 @@
-<p>
-  view-question works!
-</p>
+<mat-card>
+  <mat-card-title>
+    Question Details
+  </mat-card-title>
+  <mat-card-content>
+    <app-question-details [ques]="question"></app-question-details>
+  </mat-card-content>
+  <mat-card-actions *ngIf="mode!==Mode.ARC_INVITED&&mode!==Mode.ARC_DIRECT">
+    <!--not shown for archived-->
+    <button mat-button *ngIf="mode===Mode.DIRECT||mode===Mode.INVITED" (click)="sendReply()">Reply</button>
+    <button mat-button *ngIf="mode===Mode.INVITED">Invite</button>
+  </mat-card-actions>
+</mat-card>

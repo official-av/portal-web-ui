@@ -4,16 +4,20 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from '../material.module';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ProfileService} from './profile.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     MaterialModule,
     FlexLayoutModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [],
-  declarations: [ProfileviewComponent]
+  declarations: [ProfileviewComponent],
+  providers: [ProfileService]
 })
 export class ProfileModule {
 }

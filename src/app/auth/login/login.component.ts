@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,9 @@ import {AuthService} from '../auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>, private router: Router, private authService: AuthService) {
+  constructor(public dialogRef: MatDialogRef<LoginComponent>,
+              private router: Router, private authService: AuthService,
+              private profileService: ProfileService) {
   }
 
   ngOnInit() {
@@ -27,6 +30,8 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.password)
       .then(msg => console.log(msg))
       .then(() => {
+        this.profileService.getProfileDetails().then(result => console.log(result)).catch(error => console.log(error));
+        this.router.navigate(['home']);
         this.dialogRef.close();
       })
       .catch(error => console.log(error));

@@ -10,7 +10,9 @@ import {CoreService} from './core.service';
 import {ReplyComponent} from './reply/reply.component';
 import {InviteComponent} from './invite/invite.component';
 import {CreateComponent} from './create/create.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {QuestionDetailsComponent} from './questions/question-details/question-details.component';
+import {CollabDetailsComponent} from './reply/collab-details/collab-details.component';
 
 @NgModule({
   imports: [
@@ -18,10 +20,11 @@ import {FormsModule} from '@angular/forms';
     FlexLayoutModule,
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [],
-  declarations: [DashboardComponent, QuestionsComponent, ViewQuestionComponent, ReplyComponent, InviteComponent, CreateComponent],
+  declarations: [DashboardComponent, QuestionsComponent, ViewQuestionComponent, ReplyComponent, InviteComponent, CreateComponent, QuestionDetailsComponent, CollabDetailsComponent],
   providers: [CoreService]
 })
 export class CoreModule {

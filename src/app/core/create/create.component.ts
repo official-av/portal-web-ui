@@ -3,6 +3,8 @@ import {Dept} from '../models/dept.model';
 import {CoreService} from '../core.service';
 import {Question} from '../models/question.model';
 import {NgForm} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {SharedService} from '../../shared/shared.service';
 
 @Component({
   selector: 'app-create',
@@ -10,11 +12,11 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  depts: Dept[];
+  depts: Observable<Dept[]>;
   question: Question;
 
-  constructor(private coreService: CoreService) {
-    this.depts = this.coreService.getDeptDetails();
+  constructor(private coreService: CoreService, private sharedService: SharedService) {
+    this.depts = this.sharedService.getDeptList();
     this.question = new Question();
   }
 

@@ -15,6 +15,7 @@ import {ProfileModule} from './profile/profile.module';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 import {CoreModule} from './core/core.module';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {InviteComponent} from './core/invite/invite.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -47,7 +48,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, ResetPasswordComponent]
+  entryComponents: [LoginComponent, ResetPasswordComponent, InviteComponent]
 })
 export class AppModule {
 }

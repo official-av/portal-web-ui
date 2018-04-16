@@ -3,14 +3,16 @@
     <mat-card-title>Enter OTP</mat-card-title>
     <mat-card-subtitle>We've sent an OTP to ******{{contact.toString().substr(6,4)}}</mat-card-subtitle>
     <mat-card-content>
-      <mat-form-field>
-        <input matInput type="text" placeholder="enter otp" [formControl]="otpControl">
-        <mat-error>Invalid OTP</mat-error>
-      </mat-form-field>
+      <form [formGroup]="otpFormGroup">
+        <mat-form-field>
+          <input matInput type="number" placeholder="enter otp" formControlName="otp">
+          <mat-error>Invalid OTP</mat-error>
+        </mat-form-field>
+      </form>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="sendOtp()">Resend OTP</button>
-      <button mat-button (click)="onSubmit()" [disabled]="!otpControl.valid">Submit</button>
+      <button mat-button (click)="onSubmit()" [disabled]="!otpFormGroup.valid">Submit</button>
     </mat-card-actions>
   </mat-card>
 </section>

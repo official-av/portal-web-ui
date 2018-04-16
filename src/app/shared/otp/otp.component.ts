@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {SharedService} from '../shared.service';
 
 @Component({
   selector: 'app-otp',
@@ -9,26 +10,33 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class OtpComponent implements OnInit {
   private contact: number;
-  enteredValue: string;
-  otpControl: FormControl;
+  otp: number;
+  otpFormGroup: FormGroup;
   @Output() otpVerified = new EventEmitter<boolean>();
 
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private sharedService: SharedService) {
     this.contact = this.authService.getUserDetails().contact;
   }
 
   ngOnInit() {
-    this.otpControl = new FormControl(null, [Validators.required]);
-    // TODO: Add ASync Validator
+    this.otpFormGroup = new FormGroup({
+      otp: new FormControl(null, [Validators.required])
+    });
+    this.sendOtp();
   }
 
   sendOtp() {
-    // TODO: Add backend call to send otp and get sent-otp
+    console.log('trigger');
+    this.sharedService.fetchOtp().then((value: any) => this.otp = value.text).catch(error => console.log(error));
   }
 
   onSubmit() {
-    this.otpVerified.emit(true);
+    if (this.otpFormGroup.get('otp').value === this.otp) {
+      this.otpVerified.emit(true);
+    } else {
+      console.log('value mismatch');
+    }
   }
 
 }

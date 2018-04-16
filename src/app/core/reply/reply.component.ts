@@ -3,6 +3,7 @@ import {Question} from '../models/question.model';
 import {ActivatedRoute} from '@angular/router';
 import {CoreService} from '../core.service';
 import {NgForm} from '@angular/forms';
+import {Mode} from '../enums/mode.enum';
 
 @Component({
   selector: 'app-reply',
@@ -10,17 +11,14 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./reply.component.scss']
 })
 export class ReplyComponent implements OnInit {
-  mode: 'direct' | 'invited';
+  mode: Mode;
   question: Question;
+  reply = '';
+  public Mode = Mode;
 
   constructor(private route: ActivatedRoute, private coreService: CoreService) {
     this.mode = this.route.snapshot.params['mode'];
-    const id = this.route.snapshot.params['ques_id'];
-    if (this.mode === 'direct') {
-      this.question = this.coreService.getDirectQuestions().find(ques => ques.ques_id === id);
-    } else {
-      this.question = this.coreService.getInvitedQuestions().find(ques => ques.ques_id === id);
-    }
+    this.question = this.coreService.currentQues;
     console.log(this.question);
   }
 
@@ -28,10 +26,12 @@ export class ReplyComponent implements OnInit {
   }
 
   sendReply(form: NgForm) {
-    if (this.mode === 'direct') {
+    if (this.mode === Mode.DIRECT) {
       console.log(this.question);
+      this.question.answer = this.reply;
       this.coreService.sendQuestion(this.question);
     } else {
+      this.question.collaborations[0].rec_answer = this.reply;
       this.coreService.sendCollaboration(this.question.ques_id, this.question.collaborations[0]);
     }
   }

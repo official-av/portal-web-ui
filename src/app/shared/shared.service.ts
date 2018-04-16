@@ -1,18 +1,38 @@
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {ProfileService} from '../profile/profile.service';
+import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators/map';
+import {Dept} from '../core/models/dept.model';
+import {Observable} from 'rxjs/Observable';
+
+@Injectable()
 export class SharedService {
-  private dept_list: Map<string, string>;
+  depts: Dept[];
 
-  constructor() {
-    this.dept_list = new Map<string, string>();
-    this.dept_list.set('1234', 'Department of Defence');
+  constructor(private http: HttpClient, private profileService: ProfileService) {
+    this.getDeptList().subscribe((res: Dept[]) => this.depts = res);
   }
 
-  setDeptList(arr: { dept_id: string, dept_name: string }[]) {
-    for (const obj of arr) {
-      this.dept_list.set(obj.dept_id, obj.dept_name);
-    }
+  fetchOtp() {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/otp/', {
+        phonenum: '7065246961'
+      }).subscribe(result => {
+        console.log(result);
+        resolve(result);
+      }, error => reject(error));
+    });
   }
 
-  getDeptList() {
-    return new Map(this.dept_list);
+  getDeptList(): Observable<Dept[]> {
+    return this.http.get(environment.api_url + 'auth/deptlist/')
+      .pipe(map((result: Dept[]) => {
+        return result;
+      }));
+  }
+
+  getDeptId(name: string) {
+    return this.depts.find(dept => dept.name === name).id;
   }
 }

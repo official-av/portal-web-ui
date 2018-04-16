@@ -9,6 +9,7 @@ import {DashboardComponent} from './core/dashboard/dashboard.component';
 import {QuestionsComponent} from './core/questions/questions.component';
 import {CreateComponent} from './core/create/create.component';
 import {ReplyComponent} from './core/reply/reply.component';
+import {ViewQuestionComponent} from './core/questions/view-question/view-question.component';
 
 const routes: Routes = [
   {
@@ -44,8 +45,12 @@ const routes: Routes = [
     component: CreateComponent
   },
   {
-    path: 'reply/:mode/:ques_id',
+    path: 'reply/:mode',
     component: ReplyComponent
+  },
+  {
+    path: 'view/:mode/:ques_id',
+    component: ViewQuestionComponent
   }
 ];
 

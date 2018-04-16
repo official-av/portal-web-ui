@@ -3,9 +3,11 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
+  MatChipsModule,
   MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -37,7 +39,9 @@ import {
     MatPaginatorModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule,
+    MatChipsModule
   ],
   exports: [
     MatToolbarModule,
@@ -56,7 +60,9 @@ import {
     MatPaginatorModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule {

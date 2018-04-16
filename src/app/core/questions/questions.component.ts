@@ -3,6 +3,7 @@ import {Question} from '../models/question.model';
 import {ActivatedRoute} from '@angular/router';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
+import {Mode} from '../enums/mode.enum';
 
 @Component({
   selector: 'app-questions',
@@ -11,15 +12,16 @@ import {CoreService} from '../core.service';
 })
 
 export class QuestionsComponent implements OnInit, AfterViewInit {
-  mode: 'direct' | 'invited' | 'archived';
+  mode: Mode;
+  public Mode = Mode;
 
   // data sources
   dataSource = new MatTableDataSource<Question>();
   directDataSource = new MatTableDataSource<Question>();
   invitedDataSource = new MatTableDataSource<Question>();
 
-  directColumns = ['Content', 'Asked on', 'Deadline', 'Invited', 'Reply'];
-  invitedColumns = ['Content', 'Asked By', 'Asked on', /*'Deadline',*/ 'Reply'];
+  directColumns = ['Content', 'Asked on', 'Deadline', 'Invited', 'Details'];
+  invitedColumns = ['Content', 'Asked By', 'Asked on', /*'Deadline',*/ 'Details'];
   archivedDirectColumns = ['Content', 'Asked on', 'Answered on', 'Details'];
   archivedInvitedColumns = ['Content', 'Asked By', 'Asked on', 'Answered on', 'Details'];
 
@@ -27,25 +29,29 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) directPaginator: MatPaginator;
   @ViewChild(MatPaginator) invitedPaginator: MatPaginator;
 
-  constructor(private route: ActivatedRoute, private coreService: CoreService) {
-    this.mode = this.route.snapshot.params['mode'];
+  constructor(private route: ActivatedRoute, public coreService: CoreService) {
+    switch (this.route.snapshot.params['mode']) {
+      case 'direct':
+        this.mode = Mode.DIRECT;
+        break;
+      case 'invited':
+        this.mode = Mode.INVITED;
+        break;
+      case 'archived':
+        this.mode = Mode.ARC_DIRECT;
+        break;
+      default:
+        console.log('error');
+    }
     this.initDataSource();
   }
 
   initDataSource() {
-    switch (this.mode) {
-      case 'direct':
-        this.dataSource.data = this.coreService.getDirectQuestions();
-        break;
-      case 'invited':
-        this.dataSource.data = this.coreService.getInivtedArchivedQuestions();
-        break;
-      case 'archived':
-        this.invitedDataSource.data = this.coreService.getInivtedArchivedQuestions();
-        this.directDataSource.data = this.coreService.getDirectArchivedQuetions();
-        break;
-      default:
-        console.log('error');
+    if (this.mode === Mode.DIRECT || this.mode === Mode.INVITED) {
+      this.dataSource.data = this.coreService.getQuestions(this.mode);
+    } else {
+      this.invitedDataSource.data = this.coreService.getQuestions(Mode.ARC_INVITED);
+      this.directDataSource.data = this.coreService.getQuestions(Mode.ARC_DIRECT);
     }
   }
 
@@ -53,7 +59,7 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.mode !== 'archived') {
+    if (this.mode === Mode.ARC_DIRECT || this.mode === Mode.INVITED) {
       this.dataSource.paginator = this.paginator;
     } else {
       this.directDataSource.paginator = this.directPaginator;

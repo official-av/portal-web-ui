@@ -1,13 +1,17 @@
 import {Question} from './models/question.model';
 import {CollaboratedAnswer} from './models/collaborated-answer.model';
-import {Dept} from './models/dept.model';
+import {Mode} from './enums/mode.enum';
+import {SharedService} from '../shared/shared.service';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AuthService} from '../auth/auth.service';
 
+@Injectable()
 export class CoreService {
+  public currentQues: Question = null;
   private fetchedQuestions: Question[];
-  private depts = [
-    {name: 'Defence', id: '123'},
-    {name: 'DST', id: '124'}
-  ];
+
   private directQues: Question[] = [
     {
       ques_id: '1',
@@ -18,12 +22,11 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '124', asked_on: new Date(), rec_answer: 'my answer'},
-        {asked_to: '124', asked_on: new Date(), rec_answer: 'qwerty'},
-        {asked_to: '124', asked_on: new Date(), rec_answer: 'yodo'},
-        {asked_to: '124', asked_on: new Date(), rec_answer: 'huli'}
+        {invited_dept: '124', asked_on: new Date(), rec_answer: 'my answer'},
+        {invited_dept: '124', asked_on: new Date(), rec_answer: 'qwerty'},
+        {invited_dept: '124', asked_on: new Date(), rec_answer: 'yodo'},
+        {invited_dept: '124', asked_on: new Date(), rec_answer: 'huli'}
       ],
-      answered: true,
       answer: 'sample answer'
     },
     {
@@ -35,12 +38,11 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '123', asked_on: new Date(), rec_answer: 'my answer'},
-        {asked_to: '123', asked_on: new Date(), rec_answer: 'qwerty'},
-        {asked_to: '123', asked_on: new Date(), rec_answer: 'yodo'},
-        {asked_to: '123', asked_on: new Date(), rec_answer: 'huli'}
+        {invited_dept: '123', asked_on: new Date(), rec_answer: 'my answer'},
+        {invited_dept: '123', asked_on: new Date(), rec_answer: 'qwerty'},
+        {invited_dept: '123', asked_on: new Date(), rec_answer: 'yodo'},
+        {invited_dept: '123', asked_on: new Date(), rec_answer: 'huli'}
       ],
-      answered: true,
       answer: 'sample answer'
     }
   ];
@@ -54,12 +56,11 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '456', asked_on: new Date(), rec_answer: 'my answer'},
-        {asked_to: '457', asked_on: new Date(), rec_answer: 'qwerty'},
-        {asked_to: '458', asked_on: new Date(), rec_answer: 'yodo'},
-        {asked_to: '459', asked_on: new Date(), rec_answer: 'huli'}
+        {invited_dept: '456', asked_on: new Date(), rec_answer: 'my answer'},
+        {invited_dept: '457', asked_on: new Date(), rec_answer: 'qwerty'},
+        {invited_dept: '458', asked_on: new Date(), rec_answer: 'yodo'},
+        {invited_dept: '459', asked_on: new Date(), rec_answer: 'huli'}
       ],
-      answered: true,
       answer: 'sample answer'
     },
     {
@@ -71,12 +72,11 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '456', asked_on: new Date(), rec_answer: 'my answer'},
-        {asked_to: '457', asked_on: new Date(), rec_answer: 'qwerty'},
-        {asked_to: '458', asked_on: new Date(), rec_answer: 'yodo'},
-        {asked_to: '459', asked_on: new Date(), rec_answer: 'huli'}
+        {invited_dept: '456', asked_on: new Date(), rec_answer: 'my answer'},
+        {invited_dept: '457', asked_on: new Date(), rec_answer: 'qwerty'},
+        {invited_dept: '458', asked_on: new Date(), rec_answer: 'yodo'},
+        {invited_dept: '459', asked_on: new Date(), rec_answer: 'huli'}
       ],
-      answered: true,
       answer: 'sample answer'
     }
   ];
@@ -90,7 +90,7 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '457', asked_on: new Date()}
+        {invited_dept: '457', asked_on: new Date()}
       ]
     },
     {
@@ -102,7 +102,7 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '456', asked_on: new Date()}
+        {invited_dept: '456', asked_on: new Date()}
       ]
     }
   ];
@@ -116,7 +116,7 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '457', asked_on: new Date(), rec_answer: 'my answer'}
+        {invited_dept: '457', asked_on: new Date(), rec_answer: 'my answer'}
       ]
     },
     {
@@ -128,47 +128,67 @@ export class CoreService {
       is_collaborative: true,
       answered_on: new Date(),
       collaborations: [
-        {asked_to: '456', asked_on: new Date(), rec_answer: 'my answer'}
+        {invited_dept: '456', asked_on: new Date(), rec_answer: 'my answer'}
       ]
     }
   ];
 
-  constructor() {
+  constructor(private sharedService: SharedService,
+              private http: HttpClient,
+              private authService: AuthService) {
+    // this.depts = this.sharedService.getDeptList();
   }
 
-  // returns dept id and names
-  getDeptDetails() {
-    return [...this.depts] as Dept[];
+  getQuestions(mode: Mode) {
+    switch (mode) {
+      // return questions from table wherever asked_to is logged in user's dept_id
+      case Mode.DIRECT:
+        return this.directQues;
+      // return question content + ques_id data from invite table which don't have answers
+      case Mode.INVITED:
+        return this.invitedQues;
+      // return questions from table wherever asked_to is logged in user's dept_id and is_answered true
+      case Mode.ARC_DIRECT:
+        return this.arcDirectQues;
+      // return question content + ques_id data from invite table which have answers
+      case Mode.ARC_INVITED:
+        return this.arcInvitedQues;
+      default:
+        return null;
+    }
   }
 
-  getDeptName(id: string) {
-    return this.depts.find(dept => dept.id === id).name;
+  fetchDirect() {
+    // TODO: api/getDirect
   }
 
-  // return questions from table wherever asked_to is logged in user's dept_id
-  getDirectQuestions() {
-    return this.directQues;
-  }
-
-  // return question content + ques_id data from invite table which don't have answers
-  getInvitedQuestions() {
-    return this.invitedQues;
-  }
-
-  // return questions from table wherever asked_to is logged in user's dept_id and is_answered true
-  getDirectArchivedQuetions() {
-    return this.arcDirectQues;
-  }
-
-  // return question content + ques_id data from invite table which have answers
-  getInivtedArchivedQuestions() {
-    return this.arcInvitedQues;
+  fetchInvited() {
+    // TODO: api/getInvited
   }
 
   sendQuestion(ques: Question) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/create/',
+        ques,
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        }).subscribe((result: any) => {
+        console.log(result);
+        resolve('success');
+      }, error => reject(error));
+    });
+  }
+
+  sendInvite(invites: CollaboratedAnswer[]) {
+    // TODO: api/sendInvite
+    console.log(invites);
   }
 
   sendCollaboration(id: string, collab: CollaboratedAnswer) {
-
+    // TODO: api/invitedReply
   }
+
+  // TODO: get separate archived content or filter at frontend
 }

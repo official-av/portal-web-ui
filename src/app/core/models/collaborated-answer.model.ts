@@ -1,6 +1,7 @@
 export class CollaboratedAnswer {
+  ques_id?: string;
   asked_on: Date;
   rec_answer?: string;
   answered_on?: string;
-  asked_to:string;
+  invited_dept: string;
 }

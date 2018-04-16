@@ -8,7 +8,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Choose Department" name="dept" [(ngModel)]="question.asked_to">
-          <mat-option *ngFor="let dept of depts" [value]="dept.id">
+          <mat-option *ngFor="let dept of depts|async" [value]="dept.id">
             {{ dept.name }}
           </mat-option>
         </mat-select>
