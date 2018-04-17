@@ -14,7 +14,6 @@ export class ReplyComponent implements OnInit {
   mode: Mode;
   question: Question;
   reply = '';
-  public Mode = Mode;
 
   constructor(private route: ActivatedRoute, private coreService: CoreService) {
     this.mode = this.route.snapshot.params['mode'];
@@ -26,7 +25,7 @@ export class ReplyComponent implements OnInit {
   }
 
   sendReply(form: NgForm) {
-    if (this.mode === Mode.DIRECT) {
+    if (this.mode === 'direct') {
       console.log(this.question);
       this.question.answer = this.reply;
       this.coreService.sendQuestion(this.question);

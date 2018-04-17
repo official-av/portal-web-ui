@@ -13,6 +13,7 @@ import {CoreService} from '../../core.service';
 export class ViewQuestionComponent implements OnInit {
   question: Question;
   mode: Mode;
+  public Mode = Mode;
 
   constructor(private route: ActivatedRoute, private coreService: CoreService, private router: Router) {
     this.mode = this.route.snapshot.params['mode'];
@@ -22,11 +23,11 @@ export class ViewQuestionComponent implements OnInit {
     this.coreService.getQuestions(this.mode)
       .then((res: Question[]) => {
         this.coreService.currentQues = res.find(q => q.ques_id === id);
+        this.question = this.coreService.currentQues;
       }).catch(error => console.log(error));
   }
 
   ngOnInit() {
-    this.question = this.coreService.currentQues;
   }
 
   sendReply() {
