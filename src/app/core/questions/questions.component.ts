@@ -3,9 +3,9 @@ import {Question} from '../models/question.model';
 import {ActivatedRoute} from '@angular/router';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
-import {Mode} from '../enums/mode.enum';
 import {SharedService} from '../../shared/shared.service';
 import {ModalsService} from '../../modals.service';
+import {Mode} from '../enums/mode.enum';
 
 @Component({
   selector: 'app-questions',
@@ -14,7 +14,7 @@ import {ModalsService} from '../../modals.service';
 })
 
 export class QuestionsComponent implements OnInit, AfterViewInit {
-  mode: Mode;
+  mode: string;
   public Mode = Mode;
 
   // data sources
@@ -37,13 +37,13 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
               public modalsService: ModalsService) {
     switch (this.route.snapshot.params['mode']) {
       case 'direct':
-        this.mode = Mode.DIRECT;
+        this.mode = 'direct';
         break;
       case 'invited':
-        this.mode = Mode.INVITED;
+        this.mode = 'invited';
         break;
       case 'archived':
-        this.mode = Mode.ARC_DIRECT;
+        this.mode = 'arc_direct';
         break;
       default:
         console.log('error');
@@ -52,23 +52,28 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   }
 
   initDataSource() {
-    if (this.mode === Mode.DIRECT || this.mode === Mode.INVITED) {
+    if (this.mode === 'direct' || this.mode === 'invited') {
       (<Promise<Question[]>>this.coreService.getQuestions(this.mode))
         .then((result: Question[]) => {
           this.dataSource.data = result;
         }).catch(error => console.log(error));
+    } else {
+      (<Promise<Question[]>>this.coreService.getQuestions(Mode.ARC_DIRECT))
+        .then((result: Question[]) => {
+          this.directDataSource.data = result;
+        }).catch(error => console.log(error));
+      (<Promise<Question[]>>this.coreService.getQuestions(Mode.ARC_INVITED))
+        .then((result: Question[]) => {
+          this.invitedDataSource.data = result;
+        }).catch(error => console.log(error));
     }
-    /*else {
-         this.invitedDataSource.data = this.coreService.getQuestions(Mode.ARC_INVITED);
-         this.directDataSource.data = this.coreService.getQuestions(Mode.ARC_DIRECT);
-       }*/
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    if (this.mode === Mode.ARC_DIRECT || this.mode === Mode.INVITED) {
+    if (this.mode === 'arc_direct' || this.mode === 'arc_invited') {
       this.dataSource.paginator = this.paginator;
     } else {
       this.directDataSource.paginator = this.directPaginator;

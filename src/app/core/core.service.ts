@@ -1,6 +1,5 @@
 import {Question} from './models/question.model';
 import {CollaboratedAnswer} from './models/collaborated-answer.model';
-import {Mode} from './enums/mode.enum';
 import {SharedService} from '../shared/shared.service';
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
@@ -50,9 +49,9 @@ export class CoreService {
   private arcDirectQues: Question[] = [
     {
       ques_id: '1',
-      content: 'sample question',
+      content: 'Concerning about the budget for missiles..',
       asked_on: new Date(),
-      asked_to: 'defence',
+      asked_to: 'Department of Defence',
       deadline: new Date(),
       is_collaborative: true,
       answered_on: new Date(),
@@ -66,9 +65,9 @@ export class CoreService {
     },
     {
       ques_id: '2',
-      content: 'sample content',
+      content: 'Regarding funding for latest IT projects..',
       asked_on: new Date(),
-      asked_to: 'dst',
+      asked_to: 'Department of Science and Tech..',
       deadline: new Date(),
       is_collaborative: true,
       answered_on: new Date(),
@@ -84,9 +83,9 @@ export class CoreService {
   private invitedQues: Question[] = [
     {
       ques_id: '1',
-      content: 'sample question',
+      content: 'Regarding purchase of F22 Raptor jets..',
       asked_on: new Date(),
-      asked_to: 'defence',
+      asked_to: 'Department of Defence',
       deadline: new Date(),
       is_collaborative: true,
       answered_on: new Date(),
@@ -96,9 +95,9 @@ export class CoreService {
     },
     {
       ques_id: '2',
-      content: 'sample content',
+      content: 'Regarding approval of wifi connected rail..',
       asked_on: new Date(),
-      asked_to: 'dst',
+      asked_to: 'Department of Railways',
       deadline: new Date(),
       is_collaborative: true,
       answered_on: new Date(),
@@ -141,20 +140,26 @@ export class CoreService {
     // this.depts = this.sharedService.getDeptList();
   }
 
-  getQuestions(mode: Mode) {
+  getQuestions(mode: string) {
     switch (mode) {
       // return questions from table wherever asked_to is logged in user's dept_id
-      case Mode.DIRECT:
+      case 'direct':
         return this.fetchDirect();
       // return question content + ques_id data from invite table which don't have answers
-      /*case Mode.INVITED:
-        return this.invitedQues;
+      case 'invited':
+        return new Promise(resolve => {
+          resolve(this.invitedQues);
+        });
       // return questions from table wherever asked_to is logged in user's dept_id and is_answered true
-      case Mode.ARC_DIRECT:
-        return this.arcDirectQues;
+      case 'arc_direct':
+        return new Promise(resolve => {
+          resolve(this.arcDirectQues);
+        });
       // return question content + ques_id data from invite table which have answers
-      case Mode.ARC_INVITED:
-        return this.arcInvitedQues;*/
+      case 'arc_invited':
+        return new Promise(resolve => {
+          resolve(this.arcInvitedQues);
+        });
       default:
         return null;
     }

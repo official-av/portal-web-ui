@@ -1,7 +1,7 @@
 <section fxLayoutGap="20px" fxLayout="row">
   <mat-card class="primary">
     <mat-card-title>Create Reply</mat-card-title>
-    <mat-card-subtitle *ngIf="mode===Mode.INVITED">
+    <mat-card-subtitle *ngIf="mode==='invited'">
       Invited by {{question.asked_to}}
     </mat-card-subtitle>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
@@ -18,7 +18,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="secondary" *ngIf="mode===Mode.DIRECT&&question.is_collaborative">
+  <mat-card class="secondary" *ngIf="mode==='direct'&&question.is_collaborative">
     <mat-card-title>Available Replies
     </mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
