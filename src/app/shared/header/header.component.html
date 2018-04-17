@@ -7,6 +7,8 @@
     <a routerLink="about" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">About</a>
     <a routerLink="contact" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Contact</a>
     <a routerLink="help" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Help</a>
+    <a mat-button color="primary" routerLink="create" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{'exact':'true'}">Create</a>
   </div>
   <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.lt-md>
     <a *ngIf="!authService.isAuthenticated()" (click)="modalService.openLoginModal()">Login</a>
