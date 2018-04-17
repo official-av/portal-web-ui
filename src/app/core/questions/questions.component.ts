@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
 import {Mode} from '../enums/mode.enum';
+import {SharedService} from '../../shared/shared.service';
 
 @Component({
   selector: 'app-questions',
@@ -29,7 +30,9 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) directPaginator: MatPaginator;
   @ViewChild(MatPaginator) invitedPaginator: MatPaginator;
 
-  constructor(private route: ActivatedRoute, public coreService: CoreService) {
+  constructor(private route: ActivatedRoute,
+              public coreService: CoreService,
+              public sharedService: SharedService) {
     switch (this.route.snapshot.params['mode']) {
       case 'direct':
         this.mode = Mode.DIRECT;
@@ -48,11 +51,15 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
   initDataSource() {
     if (this.mode === Mode.DIRECT || this.mode === Mode.INVITED) {
-      this.dataSource.data = this.coreService.getQuestions(this.mode);
-    } else {
-      this.invitedDataSource.data = this.coreService.getQuestions(Mode.ARC_INVITED);
-      this.directDataSource.data = this.coreService.getQuestions(Mode.ARC_DIRECT);
+      (<Promise<Question[]>>this.coreService.getQuestions(this.mode))
+        .then((result: Question[]) => {
+          this.dataSource.data = result;
+        }).catch(error => console.log(error));
     }
+    /*else {
+         this.invitedDataSource.data = this.coreService.getQuestions(Mode.ARC_INVITED);
+         this.directDataSource.data = this.coreService.getQuestions(Mode.ARC_DIRECT);
+       }*/
   }
 
   ngOnInit() {

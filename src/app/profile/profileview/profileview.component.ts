@@ -31,7 +31,7 @@ export class ProfileviewComponent implements OnInit {
         disabled: true
       }, [Validators.required, Validators.email]),
       'contact': new FormControl({
-        value: this.temp_user.contact,
+        value: this.temp_user.phonenum,
         disabled: true
       }, [Validators.required, Validators.pattern('[0-9]{10}')])
     });

@@ -25,7 +25,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>Invited</mat-header-cell>
           <mat-cell *matCellDef="let element">
             <ng-container *ngIf="element.is_collaborative;else invite">
-              <span *ngFor="let dept of element.collaborations">{{coreService.getDeptName(dept.invited_dept)}},</span>
+              <span *ngFor="let dept of element.collaborations">{{sharedService.getDeptName(dept.invited_dept)}},</span>
             </ng-container>
             <ng-template #invite>
               <button mat-button color="primary">Invite</button>

@@ -1,11 +1,11 @@
 export class User {
   username: string;
-  dept_id: string;
-  firstname: string;
-  lastname: string;
+  dept: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  contact: number;
-  status?: boolean;
-  contact_verified?: boolean;
-  email_verified?: boolean;
+  phonenum: number;
+  status_flag?: boolean;
+  mobile_flag?: boolean;
+  email_flag?: boolean;
 }

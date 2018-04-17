@@ -2,10 +2,10 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        <h2>Welcome, {{temp_user.firstname}} {{temp_user.lastname}}</h2>
+        <h2>Welcome, {{temp_user.first_name}} {{temp_user.last_name}}</h2>
       </mat-card-title>
       <mat-card-subtitle>
-        <h3>{{sharedService.getDeptList().get(temp_user.dept_id)}}</h3>
+        <h3>{{sharedService.getDeptList().get(temp_user.dept)}}</h3>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -21,7 +21,7 @@
             <mat-form-field>
               <input matInput placeholder="Email" formControlName="email">
             </mat-form-field>
-            <button mat-button color="primary" *ngIf="temp_user.email_verified;else verifyEmail">
+            <button mat-button color="primary" *ngIf="temp_user.email_flag;else verifyEmail">
               Change
             </button>
             <ng-template #verifyEmail>
@@ -32,7 +32,7 @@
             <mat-form-field>
               <input matInput placeholder="Contact" formControlName="contact">
             </mat-form-field>
-            <button mat-button color="primary" *ngIf="temp_user.contact_verified;else verifyContact">
+            <button mat-button color="primary" *ngIf="temp_user.mobile_flag;else verifyContact">
               Change
             </button>
             <ng-template #verifyContact>
@@ -48,7 +48,7 @@
       </form>
     </mat-card-content>
     <mat-card-footer>
-      <div *ngIf="!temp_user.email_verified||!temp_user.contact_verified;else active">
+      <div *ngIf="!temp_user.email_flag||!temp_user.mobile_flag;else active">
         <h5>Profile is Inactive.</h5>
       </div>
       <ng-template #active><h5>Profile is active</h5></ng-template>

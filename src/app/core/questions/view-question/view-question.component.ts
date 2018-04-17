@@ -19,7 +19,10 @@ export class ViewQuestionComponent implements OnInit {
     console.log(this.mode);
     const id = this.route.snapshot.params['ques_id'];
     console.log(id);
-    this.coreService.currentQues = this.coreService.getQuestions(this.mode).find(q => q.ques_id === id);
+    this.coreService.getQuestions(this.mode)
+      .then((res: Question[]) => {
+        this.coreService.currentQues = res.find(q => q.ques_id === id);
+      }).catch(error => console.log(error));
   }
 
   ngOnInit() {

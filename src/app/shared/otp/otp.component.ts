@@ -16,7 +16,7 @@ export class OtpComponent implements OnInit {
 
 
   constructor(private authService: AuthService, private sharedService: SharedService) {
-    this.contact = this.authService.getUserDetails().contact;
+    this.contact = this.authService.getUserDetails().phonenum;
   }
 
   ngOnInit() {

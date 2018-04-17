@@ -1,7 +1,7 @@
 <section>
   <mat-card>
     <mat-card-title>Enter OTP</mat-card-title>
-    <mat-card-subtitle>We've sent an OTP to ******{{contact.toString().substr(6,4)}}</mat-card-subtitle>
+    <mat-card-subtitle>We've sent an OTP to ******{{phonenum.toString().substr(6,4)}}</mat-card-subtitle>
     <mat-card-content>
       <form [formGroup]="otpFormGroup">
         <mat-form-field>

@@ -1,6 +1,6 @@
 export enum Mode {
-  DIRECT,
-  INVITED,
-  ARC_DIRECT,
-  ARC_INVITED
+  DIRECT = 'direct',
+  INVITED = 'invited',
+  ARC_DIRECT = 'arc_direct',
+  ARC_INVITED = 'arc_invited'
 }

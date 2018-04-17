@@ -35,4 +35,8 @@ export class SharedService {
   getDeptId(name: string) {
     return this.depts.find(dept => dept.name === name).id;
   }
+  
+  getDeptName(id: string) {
+    return this.depts.find(dept => dept.id === id).name;
+  }
 }

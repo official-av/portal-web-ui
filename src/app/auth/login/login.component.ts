@@ -28,7 +28,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm.value.username,
       this.loginForm.value.password)
-      .then(msg => console.log(msg))
+      .then(msg => {
+        console.log(msg);
+        this.profileService.userProfile.username = this.loginForm.value.username;
+      })
       .then(() => {
         this.profileService.getProfileDetails().then(result => console.log(result)).catch(error => console.log(error));
         this.router.navigate(['home']);
