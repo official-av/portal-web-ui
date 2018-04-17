@@ -194,8 +194,18 @@ export class CoreService {
   }
 
   sendInvite(invites: CollaboratedAnswer[]) {
-    // TODO: api/sendInvite
-    console.log(invites);
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/invite/',
+        invites,
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        }).subscribe((result: any) => {
+        console.log(result);
+        resolve('success');
+      }, error => reject(error));
+    });
   }
 
   sendCollaboration(id: string, collab: CollaboratedAnswer) {

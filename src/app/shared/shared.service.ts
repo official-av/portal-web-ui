@@ -33,10 +33,22 @@ export class SharedService {
   }
 
   getDeptId(name: string) {
-    return this.depts.find(dept => dept.name === name).id;
+    if (this.depts) {
+      return this.depts.find(dept => dept.name === name).id;
+    } else {
+      this.getDeptList().subscribe((result: Dept[]) => {
+        return result.find(dept => dept.name === name).id;
+      });
+    }
   }
-  
+
   getDeptName(id: string) {
-    return this.depts.find(dept => dept.id === id).name;
+    if (this.depts) {
+      return this.depts.find(dept => dept.id === id).name;
+    } else {
+      this.getDeptList().subscribe((result: Dept[]) => {
+        return result.find(dept => dept.id === id).name;
+      });
+    }
   }
 }

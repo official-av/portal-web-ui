@@ -5,7 +5,7 @@
         <h2>Welcome, {{temp_user.first_name}} {{temp_user.last_name}}</h2>
       </mat-card-title>
       <mat-card-subtitle>
-        <h3>{{sharedService.getDeptList().get(temp_user.dept)}}</h3>
+        <h3>{{sharedService.getDeptName(temp_user.dept)}}</h3>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>

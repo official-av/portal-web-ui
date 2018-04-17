@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../shared.service';
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-otp',
@@ -15,8 +16,8 @@ export class OtpComponent implements OnInit {
   @Output() otpVerified = new EventEmitter<boolean>();
 
 
-  constructor(private authService: AuthService, private sharedService: SharedService) {
-    this.contact = this.authService.getUserDetails().phonenum;
+  constructor(private authService: AuthService, private sharedService: SharedService, private profileService: ProfileService) {
+    this.contact = this.profileService.userProfile.phonenum;
   }
 
   ngOnInit() {

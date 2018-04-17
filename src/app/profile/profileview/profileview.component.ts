@@ -3,7 +3,7 @@ import {User} from '../user.model';
 import {SharedService} from '../../shared/shared.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ModalsService} from '../../modals.service';
-import {AuthService} from '../../auth/auth.service';
+import {ProfileService} from '../profile.service';
 
 @Component({
   selector: 'app-profileview',
@@ -16,8 +16,8 @@ export class ProfileviewComponent implements OnInit {
 
   temp_user: User;
 
-  constructor(private sharedService: SharedService, private modalsService: ModalsService, private authService: AuthService) {
-    this.temp_user = this.authService.getUserDetails();
+  constructor(private sharedService: SharedService, private modalsService: ModalsService, private profileService: ProfileService) {
+    this.temp_user = this.profileService.userProfile;
   }
 
   ngOnInit() {

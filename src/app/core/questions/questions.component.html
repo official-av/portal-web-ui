@@ -28,7 +28,8 @@
               <span *ngFor="let dept of element.collaborations">{{sharedService.getDeptName(dept.invited_dept)}},</span>
             </ng-container>
             <ng-template #invite>
-              <button mat-button color="primary">Invite</button>
+              <button mat-button color="primary" (click)="modalsService.openInviteModal(element.ques_id)">Invite
+              </button>
             </ng-template>
           </mat-cell>
         </ng-container>

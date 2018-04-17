@@ -3,22 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {RegisterUser} from './registerUser.interface';
 import {Router} from '@angular/router';
-import {User} from '../profile/user.model';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService {
   private auth_token: string = null;
-  private user: User = {
-    username: 'random123',
-    dept: '1234',
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'johndoe@test.com',
-    phonenum: 7778889990,
-    status_flag: false,
-    mobile_flag: true,
-    email_flag: true
-  };
+  logoutSub = new Subject();
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -39,7 +29,6 @@ export class AuthService {
         'password': pwd
       }).subscribe((result: any) => {
         this.auth_token = result.token;
-        this.user.username = uname;
         console.log(result.token);
         resolve('success');
       }, error => reject(error));
@@ -50,16 +39,12 @@ export class AuthService {
 
   logout() {
     this.auth_token = null;
-    this.user = new User();
+    this.logoutSub.next();
     this.router.navigate(['']);
   }
 
   isAuthenticated() {
     return this.auth_token !== null;
-  }
-
-  getUserDetails() {
-    return {...this.user};
   }
 
   checkUsername(uname: string) {
@@ -73,12 +58,12 @@ export class AuthService {
     });
   }
 
-  checkPassword(pwd: string) {
+  checkPassword(uname: string, pwd: string) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/check/', {
-        'username': this.user.username,
+        'username': uname,
         'password': pwd
-      }).subscribe((result: any) => {
+      }, {headers: new HttpHeaders().set('Authorization', 'JWT ' + this.auth_token.toString())}).subscribe((result: any) => {
         console.log(result);
         resolve(result);
       }, error => reject(error));
@@ -86,12 +71,13 @@ export class AuthService {
   }
 
   // TODO: api/changePwd
-  changePassword(pwd: string, cnf_pwd: string) {
+  changePassword(uname: string, pwd: string, cnf_pwd: string) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.api_url + 'auth/changePass/', {
+      this.http.post(environment.api_url + 'auth/update/', {
+        'username': uname,
         'password': pwd,
-        'cnf_password': cnf_pwd
-      }).subscribe((result: any) => {
+        'confirm_password': cnf_pwd
+      }, {headers: new HttpHeaders().set('Authorization', 'JWT ' + this.auth_token.toString())}).subscribe((result: any) => {
         console.log(result);
         resolve(result);
       }, error => reject(error));

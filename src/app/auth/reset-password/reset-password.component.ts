@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatStepper} from '@angular/material';
 import {AuthService} from '../auth.service';
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,7 +23,8 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ResetPasswordComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private profileService: ProfileService) {
     this.mode = this.data.mode;
   }
 
@@ -61,7 +63,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   checkPass() {
-    this.authService.checkPassword(this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
+    this.authService.checkPassword(this.profileService.userProfile.username,this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
       if (res.response === 'match') {
         this.pwdCheckCompleted = true;
         this.stepper.next();
@@ -72,12 +74,13 @@ export class ResetPasswordComponent implements OnInit {
 
   changePass() {
     this.authService.changePassword(
+      this.profileService.userProfile.username,
       this.resetPasswordFormGroup.get('new_password').value,
       this.resetPasswordFormGroup.get('cnf_password').value).then((res: any) => {
-      /*if (res.response === 'match') {
-        this.pwdCheckCompleted = true;
-        this.stepper.next();
-      }*/
+      if (res.success === 'Yes') {
+        console.log('success');
+        this.dialogRef.close();
+      }
       // TODO: add error for else case
     }).catch(error => console.log(error));
   }

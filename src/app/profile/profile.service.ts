@@ -10,6 +10,7 @@ export class ProfileService {
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.userProfile = new User();
+    this.authService.logoutSub.subscribe(() => this.userProfile = new User());
   }
 
   getProfileDetails() {

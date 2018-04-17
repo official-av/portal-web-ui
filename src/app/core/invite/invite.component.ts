@@ -25,7 +25,9 @@ export class InviteComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private sharedService: SharedService) {
     this.quesId = this.data.ques_id;
+    console.log(this.quesId);
     this.selectedDepts = [];
+    this.invites = [];
     this.depts = this.sharedService.getDeptList();
   }
 
@@ -57,5 +59,6 @@ export class InviteComponent implements OnInit {
       this.invites.push({ques_id: this.quesId, invited_dept: dept.id, asked_on: new Date()});
     });
     this.coreService.sendInvite(this.invites);
+    console.log(this.invites);
   }
 }

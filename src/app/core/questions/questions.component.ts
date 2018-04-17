@@ -5,6 +5,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
 import {Mode} from '../enums/mode.enum';
 import {SharedService} from '../../shared/shared.service';
+import {ModalsService} from '../../modals.service';
 
 @Component({
   selector: 'app-questions',
@@ -32,7 +33,8 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               public coreService: CoreService,
-              public sharedService: SharedService) {
+              public sharedService: SharedService,
+              public modalsService: ModalsService) {
     switch (this.route.snapshot.params['mode']) {
       case 'direct':
         this.mode = Mode.DIRECT;
