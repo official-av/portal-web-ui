@@ -1,0 +1,157 @@
+<mat-card>
+  <mat-card-title>
+    <h4>{{(mode===Mode.DIRECT)?'Direct':((mode===Mode.INVITED)?'Invited':'Archived')}} Questions</h4>
+  </mat-card-title>
+  <mat-card-content>
+    <section class="direct" *ngIf="mode===Mode.DIRECT">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Content">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Asked on">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.asked_on | date:'short'}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Deadline">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Deadline</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.deadline | date:'short'}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Invited">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Invited</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.is_collaborative;else invite">
+              <span *ngFor="let dept of element.collaborations">{{sharedService.getDeptName(dept.invited_dept)}},</span>
+            </ng-container>
+            <ng-template #invite>
+              <button mat-button color="primary" (click)="modalsService.openInviteModal(element.ques_id)">Invite
+              </button>
+            </ng-template>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Details">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>View</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-button [routerLink]="['/view',Mode.DIRECT,element.ques_id]">View</button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="directColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns:directColumns;"></mat-row>
+      </mat-table>
+    </section><!--add invite-->
+    <section class="invited" *ngIf="mode===Mode.INVITED">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Content">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Asked By">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.asked_to}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Asked on">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.asked_on | date:'short'}}
+          </mat-cell>
+        </ng-container>
+        <!--<ng-container matColumnDef="Deadline">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Deadline</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.academics.maths}}
+          </mat-cell>
+        </ng-container>-->
+        <ng-container matColumnDef="Details">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>View</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-button [routerLink]="['/view',Mode.INVITED,element.ques_id]">View</button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="invitedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns:invitedColumns;"></mat-row>
+      </mat-table>
+    </section><!--add invite-->
+    <section class="archived" *ngIf="mode===Mode.ARC_DIRECT||mode===Mode.ARC_INVITED">
+      <mat-tab-group>
+        <mat-tab label="Archived Direct">
+          <mat-table [dataSource]="directDataSource">
+            <ng-container matColumnDef="Content">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Asked on">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.asked_on | date:'short'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Answered on">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Answered on</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.answered_on | date:'short'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Details">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button mat-button [routerLink]="['/view',Mode.ARC_DIRECT,element.ques_id]">View</button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="archivedDirectColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:archivedDirectColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #directPaginator [pageSize]="10"
+                         [pageSizeOptions]="[10, 20,50]">
+          </mat-paginator>
+        </mat-tab>
+        <mat-tab label="Archived Invited">
+          <mat-table [dataSource]="invitedDataSource">
+            <ng-container matColumnDef="Content">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Asked By">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.asked_to}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Asked on">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.asked_on | date:'short'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Answered on">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Answered on</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.answered_on | date:'short'}}
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Details">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button mat-button [routerLink]="['/view',Mode.ARC_INVITED,element.ques_id]">View</button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="archivedInvitedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:archivedInvitedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #invitedPaginator [pageSize]="10"
+                         [pageSizeOptions]="[10, 20,50]">
+          </mat-paginator>
+        </mat-tab>
+      </mat-tab-group>
+    </section><!--complete-->
+
+    <mat-paginator *ngIf="mode===Mode.DIRECT||mode===Mode.INVITED" #paginator [pageSize]="10"
+                   [pageSizeOptions]="[10, 20,50]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

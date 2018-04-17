@@ -5,7 +5,9 @@
   <mat-sidenav-content>
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <div class="container" ngClass.xs="mobile-container" fxLayoutAlign="center space-around">
-      <router-outlet></router-outlet>
+      <perfect-scrollbar>
+        <router-outlet></router-outlet>
+      </perfect-scrollbar>
     </div>
     <app-footer></app-footer>
   </mat-sidenav-content>

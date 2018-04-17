@@ -8,6 +8,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './auth.service';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,10 +18,11 @@ import {AuthService} from './auth.service';
     FlexLayoutModule,
     ReactiveFormsModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   exports: [LoginComponent, SignupComponent],
-  declarations: [LoginComponent, SignupComponent],
+  declarations: [LoginComponent, SignupComponent, ResetPasswordComponent],
   providers: [AuthService]
 })
 

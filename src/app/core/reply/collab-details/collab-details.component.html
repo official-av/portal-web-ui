@@ -1,0 +1,16 @@
+<mat-grid-list cols="2" rowHeight="fit">
+  <mat-grid-tile>Asked On : {{collab.asked_on}}</mat-grid-tile>
+  <mat-grid-tile [colspan]="2">
+    Asked to:
+    <p>{{coreService.getDeptName(collab.invited_dept)}}</p>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="collab.rec_answer;else deadline">Answered on: {{ques.answered_on}}</mat-grid-tile>
+  <ng-template #deadline>
+    <mat-grid-tile>Deadline : {{ques.deadline}}</mat-grid-tile>
+  </ng-template>
+
+  <mat-grid-tile *ngIf="collab.rec_answer" [colspan]="2">
+    Answer:
+    <p>{{collab.rec_answer}}</p>
+  </mat-grid-tile>
+</mat-grid-list>

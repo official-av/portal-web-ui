@@ -3,14 +3,21 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
+  MatChipsModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatSidenavModule,
   MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -27,7 +34,14 @@ import {
     MatDialogModule,
     MatStepperModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatChipsModule
   ],
   exports: [
     MatToolbarModule,
@@ -41,7 +55,14 @@ import {
     MatDialogModule,
     MatStepperModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule {

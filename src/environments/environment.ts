@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://localhost:8000/api/v1/'
+  api_url: 'http://portal-web-api.us-east-1.elasticbeanstalk.com/api/v1/'
+
+  // api_url: 'http://localhost:8000/api/v1/'
 };

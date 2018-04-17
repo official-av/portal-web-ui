@@ -1,0 +1,58 @@
+<section fxLayoutAlign="center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Welcome, {{temp_user.first_name}} {{temp_user.last_name}}</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <h3>{{sharedService.getDeptName(temp_user.dept)}}</h3>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="profileForm">
+        <mat-list>
+          <mat-list-item fxLayout="column" fxLayoutGap="10px">
+            <mat-form-field>
+              <input matInput placeholder="Username" formControlName="username">
+            </mat-form-field>
+            <button mat-button color="primary">Change</button>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <button mat-button color="primary" *ngIf="temp_user.email_flag;else verifyEmail">
+              Change
+            </button>
+            <ng-template #verifyEmail>
+              <button mat-button color="warn">Verify</button>
+            </ng-template>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-form-field>
+              <input matInput placeholder="Contact" formControlName="contact">
+            </mat-form-field>
+            <button mat-button color="primary" *ngIf="temp_user.mobile_flag;else verifyContact">
+              Change
+            </button>
+            <ng-template #verifyContact>
+              <button mat-button color="warn">Verify</button>
+            </ng-template>
+          </mat-list-item>
+          <mat-list-item>
+            <button mat-raised-button color="primary" (click)="modalsService.openPasswordResetModal('change')">Change
+              Password
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </form>
+    </mat-card-content>
+    <mat-card-footer>
+      <div *ngIf="!temp_user.email_flag||!temp_user.mobile_flag;else active">
+        <h5>Profile is Inactive.</h5>
+      </div>
+      <ng-template #active><h5>Profile is active</h5></ng-template>
+      <h6>*Profile becomes active only when both email and contact are verified!</h6>
+    </mat-card-footer>
+  </mat-card>
+</section>

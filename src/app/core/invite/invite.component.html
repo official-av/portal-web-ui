@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-title>
+    Choose Departments/Ministries
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutGap="20px">
+    <section class="select depts">
+      <form [formGroup]="inviteForm">
+        <mat-form-field>
+          <input type="text" placeholder="Select a Department" matInput formControlName="dept"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDeptSelect($event)">
+            <mat-option *ngFor="let dept of depts|async" [value]="dept">
+              {{ dept.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </section>
+    <section class="chips">
+      <mat-chip-list>
+        <mat-chip *ngFor="let chip of selectedDepts" color="primary" (removed)="removeChip($event)">
+          {{chip.name}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </section>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="sendInvites()">Submit</button>
+    <button mat-button color="warn" (click)="dialogRef.close()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
