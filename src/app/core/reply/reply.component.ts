@@ -17,7 +17,9 @@ export class ReplyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private coreService: CoreService) {
     this.mode = this.route.snapshot.params['mode'];
-    this.question = this.coreService.currentQues;
+    this.coreService.currentQues.subscribe((res: Question) => {
+      this.question = res;
+    });
     console.log(this.question);
   }
 

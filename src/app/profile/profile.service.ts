@@ -9,20 +9,25 @@ export class ProfileService {
   userProfile: User;
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.userProfile = new User();
+    if (this.authService.isAuthenticated()) {
+      this.userProfile = JSON.parse(localStorage.getItem('user'));
+    } else {
+      this.userProfile = new User();
+    }
     this.authService.logoutSub.subscribe(() => this.userProfile = new User());
   }
 
-  getProfileDetails() {
+  getProfileDetails(uname: string) {
     // TODO: api/profile
     return new Promise((resolve, reject) => {
       this.http.get<any>
-      (environment.api_url + 'auth/viewprofile/' + this.userProfile.username,
+      (environment.api_url + 'auth/viewprofile/' + uname,
         {
           headers: new HttpHeaders().set('Authorization', 'JWT ' + this.authService.getAuthToken())
         })
         .subscribe(result => {
           const obj: User = Object.assign(this.userProfile, result);
+          localStorage.setItem('user', JSON.stringify(obj));
           resolve(obj);
         }, error => console.log(error));
     });

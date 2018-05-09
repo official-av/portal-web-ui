@@ -6,15 +6,16 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {ProfileService} from '../profile/profile.service';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CoreService {
-  public currentQues: Question = null;
+  public currentQues = new Subject<Question>();
   private fetchedQuestions: Question[];
 
   private directQues: Question[] = [
     {
-      ques_id: '1',
+      ques_id: 1,
       content: 'sample question',
       asked_on: new Date(),
       asked_to: '1',
@@ -30,7 +31,7 @@ export class CoreService {
       answer: 'sample answer'
     },
     {
-      ques_id: '2',
+      ques_id: 2,
       content: 'sample content',
       asked_on: new Date(),
       asked_to: '4',
@@ -48,7 +49,7 @@ export class CoreService {
   ];
   private arcDirectQues: Question[] = [
     {
-      ques_id: '1',
+      ques_id: 1,
       content: 'Concerning about the budget for missiles..',
       asked_on: new Date(),
       asked_to: 'Department of Defence',
@@ -64,7 +65,7 @@ export class CoreService {
       answer: 'sample answer'
     },
     {
-      ques_id: '2',
+      ques_id: 2,
       content: 'Regarding funding for latest IT projects..',
       asked_on: new Date(),
       asked_to: 'Department of Science and Tech..',
@@ -82,7 +83,7 @@ export class CoreService {
   ];
   private invitedQues: Question[] = [
     {
-      ques_id: '1',
+      ques_id: 1,
       content: 'Regarding purchase of F22 Raptor jets..',
       asked_on: new Date(),
       asked_to: 'Department of Defence',
@@ -94,7 +95,7 @@ export class CoreService {
       ]
     },
     {
-      ques_id: '2',
+      ques_id: 2,
       content: 'Regarding approval of wifi connected rail..',
       asked_on: new Date(),
       asked_to: 'Department of Railways',
@@ -108,7 +109,7 @@ export class CoreService {
   ];
   private arcInvitedQues: Question[] = [
     {
-      ques_id: '1',
+      ques_id: 1,
       content: 'sample question',
       asked_on: new Date(),
       asked_to: 'defence',
@@ -120,7 +121,7 @@ export class CoreService {
       ]
     },
     {
-      ques_id: '2',
+      ques_id: 2,
       content: 'sample content',
       asked_on: new Date(),
       asked_to: 'dst',
@@ -172,10 +173,11 @@ export class CoreService {
           headers: new HttpHeaders()
             .set('Authorization', 'JWT ' + this.authService.getAuthToken()
               .toString())
-        }).subscribe((result: any) => {
-        console.log(result);
-        resolve(result);
-      }, error => reject(error));
+        })
+        .subscribe((result: any) => {
+          console.log(result);
+          resolve(result);
+        }, error => reject(error));
     });
   }
 
@@ -213,7 +215,7 @@ export class CoreService {
     });
   }
 
-  sendCollaboration(id: string, collab: CollaboratedAnswer) {
+  sendCollaboration(id: number, collab: CollaboratedAnswer) {
     // TODO: api/invitedReply
   }
 

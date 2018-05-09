@@ -3,7 +3,7 @@
     Question Details
   </mat-card-title>
   <mat-card-content>
-    <app-question-details [ques]="question"></app-question-details>
+    <app-question-details *ngIf="question"></app-question-details>
   </mat-card-content>
   <mat-card-actions *ngIf="mode!==Mode.ARC_INVITED&&mode!==Mode.ARC_DIRECT">
     <!--not shown for archived-->

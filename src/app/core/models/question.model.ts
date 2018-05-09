@@ -1,7 +1,7 @@
 import {CollaboratedAnswer} from './collaborated-answer.model';
 
 export class Question {
-  ques_id?: string;
+  ques_id?: number;
   content: string;
   asked_on: Date;
   deadline: Date;

@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.password)
       .then(msg => {
         console.log(msg);
-        this.profileService.userProfile.username = this.loginForm.value.username;
       })
       .then(() => {
-        this.profileService.getProfileDetails().then(result => console.log(result)).catch(error => console.log(error));
+        this.profileService.getProfileDetails(this.loginForm.value.username)
+          .then(result => console.log(result)).catch(error => console.log(error));
         this.router.navigate(['home']);
         this.dialogRef.close();
       })
