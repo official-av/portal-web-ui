@@ -23,7 +23,7 @@ export class ViewQuestionComponent implements OnInit {
     this.coreService.getQuestions(this.mode)
       .then((res: Question[]) => {
         this.question = res.find(q => q.ques_id == id);
-        this.coreService.currentQues.next(this.question);
+        this.coreService.currentQues = this.question;
         console.log(this.question);
       }).catch(error => console.log(error));
   }

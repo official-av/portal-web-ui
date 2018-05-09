@@ -27,6 +27,7 @@ export class ProfileService {
         })
         .subscribe(result => {
           const obj: User = Object.assign(this.userProfile, result);
+          obj.username = uname;
           localStorage.setItem('user', JSON.stringify(obj));
           resolve(obj);
         }, error => console.log(error));

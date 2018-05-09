@@ -1,15 +1,17 @@
-<mat-grid-list *ngIf="ques" cols="2" rowHeight="fit">
-  <mat-grid-tile>Asked On : {{ques.asked_on}}</mat-grid-tile>
-  <mat-grid-tile *ngIf="ques.answer">Answered on: {{ques.answered_on}}</mat-grid-tile>
+<section *ngIf="ques" fxLayout="column" fxLayoutGap="10px">
+  <div>Asked On : {{ques.asked_on|date:'short'}}</div>
+  <div *ngIf="ques.answer;else deadline">
+    Answered on: {{ques.answered_on|date:'short'}}
+  </div>
   <ng-template #deadline>
-    <mat-grid-tile *ngIf="!ques.answer">Deadline : {{ques.deadline}}</mat-grid-tile>
+    <div *ngIf="!ques.answer">Deadline : {{ques.deadline|date:'short'}}</div>
   </ng-template>
-  <mat-grid-tile [colspan]="2">
-    Question :
-    <p>{{ques.content}}</p>
-  </mat-grid-tile>
-  <mat-grid-tile *ngIf="ques.answer" [colspan]="2">
+  <div>
+    <p>Question : {{ques.content}}</p>
+  </div>
+  <div *ngIf="ques.answer">
     Answer:
     <p>{{ques.answer}}</p>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</section>
+

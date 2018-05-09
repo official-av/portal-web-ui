@@ -17,9 +17,7 @@ export class ReplyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private coreService: CoreService) {
     this.mode = this.route.snapshot.params['mode'];
-    this.coreService.currentQues.subscribe((res: Question) => {
-      this.question = res;
-    });
+    this.question = this.coreService.currentQues;
     console.log(this.question);
   }
 
@@ -30,7 +28,9 @@ export class ReplyComponent implements OnInit {
     if (this.mode === 'direct') {
       console.log(this.question);
       this.question.answer = this.reply;
-      this.coreService.sendQuestion(this.question);
+      this.coreService.sendDirectReply(this.question).then(() => {
+        console.log('success');
+      }).catch(error => console.log(error));
     } else {
       this.question.collaborations[0].rec_answer = this.reply;
       this.coreService.sendCollaboration(this.question.ques_id, this.question.collaborations[0]);

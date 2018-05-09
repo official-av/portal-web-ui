@@ -6,11 +6,10 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {ProfileService} from '../profile/profile.service';
-import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CoreService {
-  public currentQues = new Subject<Question>();
+  public currentQues: Question;
   private fetchedQuestions: Question[];
 
   private directQues: Question[] = [
@@ -188,6 +187,21 @@ export class CoreService {
   sendQuestion(ques: Question) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/create/',
+        ques,
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        }).subscribe((result: any) => {
+        console.log(result);
+        resolve('success');
+      }, error => reject(error));
+    });
+  }
+
+  sendDirectReply(ques: Question) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/dreply/',
         ques,
         {
           headers: new HttpHeaders()

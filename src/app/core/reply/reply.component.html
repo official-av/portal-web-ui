@@ -1,4 +1,4 @@
-<section fxLayoutGap="20px" fxLayout="row">
+<section fxLayoutGap="20px" fxLayout="row" *ngIf="question">
   <mat-card class="primary">
     <mat-card-title>Create Reply</mat-card-title>
     <mat-card-subtitle *ngIf="mode==='invited'">
@@ -7,7 +7,7 @@
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
       <form (ngSubmit)="sendReply(f)" #f="ngForm">
         <section>
-          <app-question-details *ngIf="question"></app-question-details>
+          <app-question-details [ques]="question"></app-question-details>
         </section>
         <mat-divider></mat-divider>
         <mat-form-field class="content">
