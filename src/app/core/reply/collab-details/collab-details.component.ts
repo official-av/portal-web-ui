@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CollaboratedAnswer} from '../../models/collaborated-answer.model';
-import {CoreService} from '../../core.service';
+import {SharedService} from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-collab-details',
@@ -9,7 +9,8 @@ import {CoreService} from '../../core.service';
 })
 export class CollabDetailsComponent implements OnInit {
   @Input() collab: CollaboratedAnswer;
-  constructor(public coreService: CoreService) {
+
+  constructor(public sharedService: SharedService) {
   }
 
   ngOnInit() {

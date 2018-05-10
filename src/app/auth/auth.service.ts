@@ -7,10 +7,15 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService {
-  private auth_token: string = null;
+  private auth_token: string;
   logoutSub = new Subject();
 
   constructor(private http: HttpClient, private router: Router) {
+    if (this.isAuthenticated()) {
+      this.auth_token = localStorage.getItem('authToken');
+    } else {
+      this.auth_token = null;
+    }
   }
 
   register(user: RegisterUser) {
@@ -28,6 +33,7 @@ export class AuthService {
         'username': uname,
         'password': pwd
       }).subscribe((result: any) => {
+        localStorage.setItem('authToken', result.token);
         this.auth_token = result.token;
         console.log(result.token);
         resolve('success');
@@ -39,12 +45,13 @@ export class AuthService {
 
   logout() {
     this.auth_token = null;
+    localStorage.clear();
     this.logoutSub.next();
     this.router.navigate(['']);
   }
 
   isAuthenticated() {
-    return this.auth_token !== null;
+    return localStorage.getItem('authToken') !== null;
   }
 
   checkUsername(uname: string) {
@@ -85,7 +92,7 @@ export class AuthService {
   }
 
   getAuthToken() {
-    return this.auth_token;
+    return localStorage.getItem('authToken');
   }
 
 }

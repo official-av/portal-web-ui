@@ -52,19 +52,26 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   }
 
   initDataSource() {
-    if (this.mode === 'direct' || this.mode === 'invited') {
+    if (this.mode === 'direct') {
       (<Promise<Question[]>>this.coreService.getQuestions(this.mode))
         .then((result: Question[]) => {
-          this.dataSource.data = result;
+          this.dataSource.data = result.filter(value => value.answer === null);
+          console.log(this.dataSource.data);
+        }).catch(error => console.log(error));
+    } else if (this.mode === 'invited') {
+      (<Promise<Question[]>>this.coreService.getQuestions(this.mode))
+        .then((result: Question[]) => {
+          this.dataSource.data = result.filter(value => value.collaborations[0].rec_answer === null);
+          console.log(this.dataSource.data);
         }).catch(error => console.log(error));
     } else {
       (<Promise<Question[]>>this.coreService.getQuestions(Mode.ARC_DIRECT))
         .then((result: Question[]) => {
-          this.directDataSource.data = result;
+          this.directDataSource.data = result.filter(value => value.answer !== null);
         }).catch(error => console.log(error));
       (<Promise<Question[]>>this.coreService.getQuestions(Mode.ARC_INVITED))
         .then((result: Question[]) => {
-          this.invitedDataSource.data = result;
+          this.invitedDataSource.data = result.filter(value => value.collaborations[0].rec_answer !== null);
         }).catch(error => console.log(error));
     }
   }

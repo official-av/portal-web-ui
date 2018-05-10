@@ -9,129 +9,7 @@ import {ProfileService} from '../profile/profile.service';
 
 @Injectable()
 export class CoreService {
-  public currentQues: Question = null;
-  private fetchedQuestions: Question[];
-
-  private directQues: Question[] = [
-    {
-      ques_id: '1',
-      content: 'sample question',
-      asked_on: new Date(),
-      asked_to: '1',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '2', asked_on: new Date(), rec_answer: 'my answer'},
-        {invited_dept: '2', asked_on: new Date(), rec_answer: 'qwerty'},
-        {invited_dept: '4', asked_on: new Date(), rec_answer: 'yodo'},
-        {invited_dept: '4', asked_on: new Date(), rec_answer: 'huli'}
-      ],
-      answer: 'sample answer'
-    },
-    {
-      ques_id: '2',
-      content: 'sample content',
-      asked_on: new Date(),
-      asked_to: '4',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '3', asked_on: new Date(), rec_answer: 'my answer'},
-        {invited_dept: '3', asked_on: new Date(), rec_answer: 'qwerty'},
-        {invited_dept: '3', asked_on: new Date(), rec_answer: 'yodo'},
-        {invited_dept: '3', asked_on: new Date(), rec_answer: 'huli'}
-      ],
-      answer: 'sample answer'
-    }
-  ];
-  private arcDirectQues: Question[] = [
-    {
-      ques_id: '1',
-      content: 'Concerning about the budget for missiles..',
-      asked_on: new Date(),
-      asked_to: 'Department of Defence',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '6', asked_on: new Date(), rec_answer: 'my answer'},
-        {invited_dept: '7', asked_on: new Date(), rec_answer: 'qwerty'},
-        {invited_dept: '8', asked_on: new Date(), rec_answer: 'yodo'},
-        {invited_dept: '9', asked_on: new Date(), rec_answer: 'huli'}
-      ],
-      answer: 'sample answer'
-    },
-    {
-      ques_id: '2',
-      content: 'Regarding funding for latest IT projects..',
-      asked_on: new Date(),
-      asked_to: 'Department of Science and Tech..',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '6', asked_on: new Date(), rec_answer: 'my answer'},
-        {invited_dept: '7', asked_on: new Date(), rec_answer: 'qwerty'},
-        {invited_dept: '8', asked_on: new Date(), rec_answer: 'yodo'},
-        {invited_dept: '9', asked_on: new Date(), rec_answer: 'huli'}
-      ],
-      answer: 'sample answer'
-    }
-  ];
-  private invitedQues: Question[] = [
-    {
-      ques_id: '1',
-      content: 'Regarding purchase of F22 Raptor jets..',
-      asked_on: new Date(),
-      asked_to: 'Department of Defence',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '4', asked_on: new Date()}
-      ]
-    },
-    {
-      ques_id: '2',
-      content: 'Regarding approval of wifi connected rail..',
-      asked_on: new Date(),
-      asked_to: 'Department of Railways',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '4', asked_on: new Date()}
-      ]
-    }
-  ];
-  private arcInvitedQues: Question[] = [
-    {
-      ques_id: '1',
-      content: 'sample question',
-      asked_on: new Date(),
-      asked_to: 'defence',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '8', asked_on: new Date(), rec_answer: 'my answer'}
-      ]
-    },
-    {
-      ques_id: '2',
-      content: 'sample content',
-      asked_on: new Date(),
-      asked_to: 'dst',
-      deadline: new Date(),
-      is_collaborative: true,
-      answered_on: new Date(),
-      collaborations: [
-        {invited_dept: '6', asked_on: new Date(), rec_answer: 'my answer'}
-      ]
-    }
-  ];
+  public currentQues: Question;
 
   constructor(private sharedService: SharedService,
               private http: HttpClient,
@@ -147,42 +25,73 @@ export class CoreService {
         return this.fetchDirect();
       // return question content + ques_id data from invite table which don't have answers
       case 'invited':
-        return new Promise(resolve => {
-          resolve(this.invitedQues);
-        });
+        return this.fetchInvited();
       // return questions from table wherever asked_to is logged in user's dept_id and is_answered true
       case 'arc_direct':
-        return new Promise(resolve => {
-          resolve(this.arcDirectQues);
-        });
+        return this.fetchDirect();
       // return question content + ques_id data from invite table which have answers
       case 'arc_invited':
-        return new Promise(resolve => {
-          resolve(this.arcInvitedQues);
-        });
+        return this.fetchInvited();
       default:
         return null;
     }
   }
 
+  /*fetching from backend*/
   fetchDirect(): Promise<Question[]> {
     return new Promise((resolve, reject) => {
-      this.http.get(environment.api_url + 'auth/directans/' + this.profileService.userProfile.dept,
+      this.http.get(environment.api_url +
+        'auth/directans/' + this.profileService.userProfile.dept,
         {
           headers: new HttpHeaders()
             .set('Authorization', 'JWT ' + this.authService.getAuthToken()
               .toString())
-        }).subscribe((result: any) => {
-        console.log(result);
-        resolve(result);
-      }, error => reject(error));
+        })
+        .subscribe((result: any) => {
+          console.log(result);
+          resolve(result);
+        }, error => reject(error));
     });
   }
 
   fetchInvited() {
-    // TODO: api/getInvited
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.api_url +
+        'auth/inviteans/' + this.profileService.userProfile.dept,
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        })
+        .subscribe((result: any[]) => {
+          console.log(result);
+          const ques: Question[] = [];
+          result.forEach((value: any) => {
+            const obj = new Question();
+            obj.content = value.content;
+            obj.answered_on = value.answered_on;
+            obj.asked_on = value.asked_on;
+            obj.asked_to = value.asked_to;
+            obj.deadline = value.deadline;
+            obj.answer = value.answer;
+            obj.ques_id = value.ques_id;
+            obj.collaborations = [];
+            const collab = new CollaboratedAnswer();
+            collab.rec_answer = value.rec_answer;
+            collab.asked_on = value.recasked_on;
+            collab.ques_id = value.ques_id;
+            obj.collaborations.push(collab);
+            ques.push(obj);
+          });
+          console.log(ques);
+          resolve(ques);
+        }, error => reject(error));
+    });
   }
 
+  /*fetching end*/
+
+  /*saving data to backend*/
   sendQuestion(ques: Question) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/create/',
@@ -198,10 +107,10 @@ export class CoreService {
     });
   }
 
-  sendInvite(invites: CollaboratedAnswer[]) {
+  sendDirectReply(ques: Question) {
     return new Promise((resolve, reject) => {
-      this.http.post(environment.api_url + 'auth/invite/',
-        invites,
+      this.http.post(environment.api_url + 'auth/dreply/',
+        ques,
         {
           headers: new HttpHeaders()
             .set('Authorization', 'JWT ' + this.authService.getAuthToken()
@@ -213,9 +122,35 @@ export class CoreService {
     });
   }
 
-  sendCollaboration(id: string, collab: CollaboratedAnswer) {
-    // TODO: api/invitedReply
+  sendInvite(invites: CollaboratedAnswer[]) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/invite/',
+        {'student': [...invites]},
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        }).subscribe((result: any) => {
+        console.log(result);
+        resolve('success');
+      }, error => reject(error));
+    });
   }
 
-  // TODO: get separate archived content or filter at frontend
+  sendCollaboration(collab: CollaboratedAnswer) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/ireply/',
+        collab,
+        {
+          headers: new HttpHeaders()
+            .set('Authorization', 'JWT ' + this.authService.getAuthToken()
+              .toString())
+        }).subscribe((result: any) => {
+        console.log(result);
+        resolve('success');
+      }, error => reject(error));
+    });
+  }
+
+  /*saving end*/
 }

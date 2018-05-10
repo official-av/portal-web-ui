@@ -52,7 +52,7 @@
         <ng-container matColumnDef="Asked By">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{element.asked_to}}
+            {{sharedService.getDeptName(element.asked_to)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Asked on">
@@ -119,7 +119,7 @@
             <ng-container matColumnDef="Asked By">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                {{element.asked_to}}
+                {{sharedService.getDeptName(element.asked_to)}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Asked on">
