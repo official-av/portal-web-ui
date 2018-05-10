@@ -58,8 +58,10 @@ export class InviteComponent implements OnInit {
     this.selectedDepts.forEach(dept => {
       this.invites.push({ques_id: this.quesId, invited_dept: dept.id, asked_on: new Date()});
     });
-    this.coreService.sendInvite(this.invites).then()
-      .catch(error => console.log('invitations sent'));
+    this.coreService.sendInvite(this.invites).then(() => {
+      this.dialogRef.close();
+    })
+      .catch(error => console.log(error));
     console.log(this.invites);
   }
 }
