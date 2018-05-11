@@ -58,7 +58,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/username/', {
         'username': uname
-      }, {headers: new HttpHeaders().set('Authorization', 'JWT ' + this.auth_token.toString())}).subscribe((result: any) => {
+      }).subscribe((result: any) => {
         console.log(result);
         resolve(result);
       }, error => reject(error));

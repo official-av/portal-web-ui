@@ -24,7 +24,9 @@ export class OtpComponent implements OnInit {
     this.otpFormGroup = new FormGroup({
       otp: new FormControl(null, [Validators.required])
     });
-    this.sendOtp();
+    this.sharedService.otpSub.subscribe(() => {
+      this.sendOtp();
+    });
   }
 
   sendOtp() {

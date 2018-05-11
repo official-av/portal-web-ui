@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatStepper} from '@angular/material';
 import {AuthService} from '../auth.service';
 import {ProfileService} from '../../profile/profile.service';
+import {SharedService} from '../../shared/shared.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,7 +25,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ResetPasswordComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private authService: AuthService,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+              private sharedService: SharedService) {
     this.mode = this.data.mode;
   }
 
@@ -53,8 +55,12 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   checkUser() {
-    this.authService.checkUsername(this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
+    const username = this.checkUsernameFormGroup.get('username').value;
+    this.authService.checkUsername(username).then((res: any) => {
       if (res.user === 'exists') {
+        this.profileService.getProfileDetails(username).then(() => {
+          this.sharedService.otpSub.next();
+        }).catch();
         this.checkUserCompleted = true;
         this.stepper.next();
       }
@@ -63,9 +69,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   checkPass() {
-    this.authService.checkPassword(this.profileService.userProfile.username,this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
+    this.authService.checkPassword(this.profileService.userProfile.username, this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
       if (res.response === 'match') {
         this.pwdCheckCompleted = true;
+        this.sharedService.otpSub.next();
         this.stepper.next();
       }
       // TODO: add error for else case

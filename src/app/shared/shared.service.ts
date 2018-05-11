@@ -5,10 +5,12 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators/map';
 import {Dept} from '../core/models/dept.model';
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class SharedService {
   depts: Dept[];
+  otpSub = new Subject<void>();
 
   constructor(private http: HttpClient, private profileService: ProfileService) {
     this.getDeptList().subscribe((res: Dept[]) => this.depts = res);
@@ -17,7 +19,7 @@ export class SharedService {
   fetchOtp() {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/otp/', {
-        phonenum: '7065246961'
+        phonenum: this.profileService.userProfile.phonenum
       }).subscribe(result => {
         console.log(result);
         resolve(result);

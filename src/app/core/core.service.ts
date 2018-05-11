@@ -80,6 +80,7 @@ export class CoreService {
             collab.rec_answer = value.rec_answer;
             collab.asked_on = value.recasked_on;
             collab.ques_id = value.ques_id;
+            collab.invited_dept = this.profileService.userProfile.dept;
             obj.collaborations.push(collab);
             ques.push(obj);
           });

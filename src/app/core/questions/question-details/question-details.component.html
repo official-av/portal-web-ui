@@ -1,17 +1,26 @@
 <section *ngIf="ques" fxLayout="column" fxLayoutGap="10px">
   <div>Asked On : {{ques.asked_on|date:'short'}}</div>
-  <div *ngIf="ques.answer;else deadline">
-    Answered on: {{ques.answered_on|date:'short'}}
-  </div>
-  <ng-template #deadline>
-    <div *ngIf="!ques.answer">Deadline : {{ques.deadline|date:'short'}}</div>
-  </ng-template>
-  <div>
-    <p>Question : {{ques.content}}</p>
-  </div>
-  <div *ngIf="ques.answer">
-    Answer:
-    <p>{{ques.answer}}</p>
+  <p>Question : {{ques.content}}</p>
+  <div [ngSwitch]="mode" fxLayoutGap="20px" fxLayout="column">
+    <div *ngSwitchCase="'arc_direct'">
+      <div *ngIf="ques.answer">
+        Answered on: {{ques.answered_on|date:'short'}}
+      </div>
+      <div *ngIf="ques.answer">
+        Answer:
+        <p>{{ques.answer}}</p>
+      </div>
+    </div>
+    <div *ngSwitchCase="'arc_invited'">
+      <div *ngIf="ques.collaborations[0].answered_on">
+        Answered on: {{ques.collaborations[0].answered_on|date:'short'}}
+      </div>
+      <div *ngIf="ques.collaborations[0]">
+        Answer:
+        <p>{{ques.collaborations[0].rec_answer}}</p>
+      </div>
+    </div>
+    <div *ngSwitchDefault>Deadline : {{ques.deadline|date:'short'}}</div>
   </div>
 </section>
 
