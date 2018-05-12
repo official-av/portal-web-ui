@@ -10,7 +10,7 @@ import {ProfileService} from '../../profile/profile.service';
   styleUrls: ['./otp.component.scss']
 })
 export class OtpComponent implements OnInit {
-  private contact: number;
+  public contact: number;
   otp: number;
   otpFormGroup: FormGroup;
   @Output() otpVerified = new EventEmitter<boolean>();
