@@ -16,7 +16,7 @@ export class ProfileviewComponent implements OnInit {
 
   temp_user: User;
 
-  constructor(private sharedService: SharedService, private modalsService: ModalsService, private profileService: ProfileService) {
+  constructor(public sharedService: SharedService, public modalsService: ModalsService, private profileService: ProfileService) {
     this.temp_user = this.profileService.userProfile;
   }
 
