@@ -6,6 +6,7 @@ import {ModalsService} from '../../modals.service';
 import {SharedService} from '../../shared/shared.service';
 import {Dept} from '../../core/models/dept.model';
 import {Observable} from 'rxjs/Observable';
+import {ErrorHandlerService} from '../../shared/error-handler.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,8 +22,10 @@ export class SignupComponent implements OnInit {
 
   // filteredDepts: Observable<any[]>;
   // TODO: Add filtering for auto-complete
-  // TODO: Make UI responsive for mobile
-  constructor(private authService: AuthService, private modalsService: ModalsService, private sharedService: SharedService) {
+  constructor(private authService: AuthService,
+              private modalsService: ModalsService,
+              private sharedService: SharedService,
+              private errorHandlerService: ErrorHandlerService) {
     this.depts = this.sharedService.getDeptList();
   }
 
@@ -84,9 +87,8 @@ export class SignupComponent implements OnInit {
     this.authService.register(user)
       .then(result => {
         this.modalsService.openLoginModal();
-        console.log(result);
       })
-      .catch(error => console.log(error));
+      .catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
 }

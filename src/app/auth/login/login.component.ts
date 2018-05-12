@@ -4,6 +4,7 @@ import {MatDialogRef} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {ProfileService} from '../../profile/profile.service';
+import {ErrorHandlerService} from '../../shared/error-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
               private router: Router, private authService: AuthService,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+              private errorHandlerService: ErrorHandlerService) {
   }
 
   ngOnInit() {
@@ -33,11 +35,11 @@ export class LoginComponent implements OnInit {
       })
       .then(() => {
         this.profileService.getProfileDetails(this.loginForm.value.username)
-          .then(result => console.log(result)).catch(error => console.log(error));
+          .then(result => console.log(result)).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
         this.router.navigate(['home']);
         this.dialogRef.close();
       })
-      .catch(error => console.log(error));
+      .catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
   onRegister() {

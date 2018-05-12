@@ -24,7 +24,6 @@ export class AuthService {
         .subscribe(result => resolve('success'),
           error => reject(error));
     });
-    // TODO: Add error notifications
   }
 
   login(uname: string, pwd: string) {
@@ -40,7 +39,6 @@ export class AuthService {
       }, error => reject(error));
     });
     // TODO: redirect to dashboard after login/profile (if inactive)
-    // TODO: Add error notifications
   }
 
   logout() {
@@ -54,6 +52,7 @@ export class AuthService {
     return localStorage.getItem('authToken') !== null;
   }
 
+  // TODO: get phonenum back from check username
   checkUsername(uname: string) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/username/', {
@@ -77,7 +76,7 @@ export class AuthService {
     });
   }
 
-  // TODO: api/changePwd
+  // TODO: api/changePwd fix token issue
   changePassword(uname: string, pwd: string, cnf_pwd: string) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/update/', {

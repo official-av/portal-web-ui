@@ -19,7 +19,7 @@ export class SharedService {
   fetchOtp() {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/otp/', {
-        phonenum: this.profileService.userProfile.phonenum
+        phonenum: '+91' + this.profileService.userProfile.phonenum.toString()
       }).subscribe(result => {
         console.log(result);
         resolve(result);
@@ -52,5 +52,29 @@ export class SharedService {
         return result.find(dept => dept.id === id).name;
       });
     }
+  }
+
+  sendMail(username: string, message: string) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/sendmail/', {
+        username: username,
+        message: message
+      }).subscribe(result => {
+        console.log(result);
+        resolve(result);
+      }, error => reject(error));
+    });
+  }
+
+  sendText(phonenum: number, message: string) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/sendmail/', {
+        phonenum: '+91' + phonenum.toString(),
+        message: message
+      }).subscribe(result => {
+        console.log(result);
+        resolve(result);
+      }, error => reject(error));
+    });
   }
 }
