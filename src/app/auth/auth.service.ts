@@ -52,7 +52,7 @@ export class AuthService {
     return localStorage.getItem('authToken') !== null;
   }
 
-  // TODO: get phonenum back from check username
+// TODO: get phonenum back from check username
   checkUsername(uname: string) {
     return new Promise((resolve, reject) => {
       this.http.post(environment.api_url + 'auth/username/', {

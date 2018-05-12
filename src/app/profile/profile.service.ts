@@ -18,7 +18,6 @@ export class ProfileService {
   }
 
   getProfileDetails(uname: string) {
-    // TODO: api/profile
     return new Promise((resolve, reject) => {
       this.http.get<any>
       (environment.api_url + 'auth/viewprofile/' + uname,
@@ -34,11 +33,12 @@ export class ProfileService {
     });
   }
 
-  verifyMail() {
-    // TODO: api/verifyMail
-  }
+  /*
+    verifyMail() {
+      // TODO: api/verifyMail
+    }
 
-  verifyMobile() {
-    // TODO: api/verifyMobile
-  }
+    verifyMobile() {
+      // TODO: api/verifyMobile
+    }*/
 }
