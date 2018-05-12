@@ -6,13 +6,18 @@ import {map} from 'rxjs/operators/map';
 import {Dept} from '../core/models/dept.model';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {ErrorHandlerService} from './error-handler.service';
+import {ToastsManager} from 'ng2-toastr';
 
 @Injectable()
 export class SharedService {
   depts: Dept[];
   otpSub = new Subject<void>();
 
-  constructor(private http: HttpClient, private profileService: ProfileService) {
+  constructor(private http: HttpClient,
+              private profileService: ProfileService,
+              private erroHandlerService: ErrorHandlerService,
+              private toastr: ToastsManager) {
     this.getDeptList().subscribe((res: Dept[]) => this.depts = res);
   }
 
@@ -23,7 +28,12 @@ export class SharedService {
       }).subscribe(result => {
         console.log(result);
         resolve(result);
-      }, error => reject(error));
+        this.toastr.info('OTP sent', 'Information');
+
+      }, error => {
+        reject(error);
+        this.erroHandlerService.showError(error, 'Dismiss');
+      });
     });
   }
 

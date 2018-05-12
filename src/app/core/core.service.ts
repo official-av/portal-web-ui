@@ -6,6 +6,8 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {ProfileService} from '../profile/profile.service';
+import {ErrorHandlerService} from '../shared/error-handler.service';
+import {ToastsManager} from 'ng2-toastr';
 
 @Injectable()
 export class CoreService {
@@ -14,7 +16,9 @@ export class CoreService {
   constructor(private sharedService: SharedService,
               private http: HttpClient,
               private authService: AuthService,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+              private errorHandlerService: ErrorHandlerService,
+              private toastr: ToastsManager) {
     // this.depts = this.sharedService.getDeptList();
   }
 
@@ -50,7 +54,10 @@ export class CoreService {
         .subscribe((result: any) => {
           console.log(result);
           resolve(result);
-        }, error => reject(error));
+        }, error => {
+          reject(error);
+          this.errorHandlerService.showError(error, 'Dismiss');
+        });
     });
   }
 
@@ -86,7 +93,10 @@ export class CoreService {
           });
           console.log(ques);
           resolve(ques);
-        }, error => reject(error));
+        }, error => {
+          reject(error);
+          this.errorHandlerService.showError(error, 'Dismiss');
+        });
     });
   }
 
@@ -104,7 +114,11 @@ export class CoreService {
         }).subscribe((result: any) => {
         console.log(result);
         resolve('success');
-      }, error => reject(error));
+        this.toastr.success('Question sent successfully', 'Success');
+      }, error => {
+        reject(error);
+        this.errorHandlerService.showError(error, 'Dismiss');
+      });
     });
   }
 
@@ -119,7 +133,11 @@ export class CoreService {
         }).subscribe((result: any) => {
         console.log(result);
         resolve('success');
-      }, error => reject(error));
+        this.toastr.success('Reply sent successfully', 'Success');
+      }, error => {
+        reject(error);
+        this.errorHandlerService.showError(error, 'Dismiss');
+      });
     });
   }
 
@@ -134,7 +152,11 @@ export class CoreService {
         }).subscribe((result: any) => {
         console.log(result);
         resolve('success');
-      }, error => reject(error));
+        this.toastr.success('Invites sent successfully', 'Success');
+      }, error => {
+        reject(error);
+        this.errorHandlerService.showError(error, 'Dismiss');
+      });
     });
   }
 
@@ -149,7 +171,11 @@ export class CoreService {
         }).subscribe((result: any) => {
         console.log(result);
         resolve('success');
-      }, error => reject(error));
+        this.toastr.success('Invites sent successfully', 'Success');
+      }, error => {
+        reject(error);
+        this.errorHandlerService.showError(error, 'Dismiss');
+      });
     });
   }
 
