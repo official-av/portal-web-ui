@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Question} from '../../models/question.model';
 import {CoreService} from '../../core.service';
+import {CollaboratedAnswer} from '../../models/collaborated-answer.model';
+import {ProfileService} from '../../../profile/profile.service';
 
 @Component({
   selector: 'app-question-details',
@@ -9,23 +11,25 @@ import {CoreService} from '../../core.service';
 })
 export class QuestionDetailsComponent implements OnInit, OnChanges {
   @Input() ques: Question;
+  @Input() mode: 'direct' | 'invited' | 'arc_invited' | 'arc_direct';
 
-  constructor(private coreService: CoreService) {
-    /*this.coreService.currentQues.subscribe((val: Question) => {
-      console.log('subs triggered');
-      this.ques = val;
-      console.log(this.ques);
-    });*/
+  constructor(private coreService: CoreService,
+              private profileService: ProfileService) {
   }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    /*const change = changes['ques'];
-    console.log(JSON.stringify(change.previousValue));
-    this.ques = change.currentValue;
-    console.log(this.ques);*/
+    this.fetchCollab();
+  }
+
+  fetchCollab() {
+    if (this.ques && this.ques.collaborations) {
+      this.ques.collaborations = this.ques.collaborations
+        .filter((value: CollaboratedAnswer) =>
+          value.invited_dept === this.profileService.userProfile.dept);
+    }
   }
 
 }

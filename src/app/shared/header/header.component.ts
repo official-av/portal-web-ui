@@ -10,7 +10,7 @@ import {AuthService} from '../../auth/auth.service';
 export class HeaderComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor(public modalService: ModalsService, private authService: AuthService) {
+  constructor(public modalService: ModalsService, public authService: AuthService) {
   }
 
   ngOnInit() {

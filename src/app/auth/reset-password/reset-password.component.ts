@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatStepper} from '@angular/material';
 import {AuthService} from '../auth.service';
 import {ProfileService} from '../../profile/profile.service';
+import {SharedService} from '../../shared/shared.service';
+import {ErrorHandlerService} from '../../shared/error-handler.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,7 +26,9 @@ export class ResetPasswordComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ResetPasswordComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private authService: AuthService,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+              private sharedService: SharedService,
+              private errorHandlerService: ErrorHandlerService) {
     this.mode = this.data.mode;
   }
 
@@ -53,36 +57,50 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   checkUser() {
-    this.authService.checkUsername(this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
-      if (res.user === 'exists') {
-        this.checkUserCompleted = true;
-        this.stepper.next();
-      }
-      // TODO: add error for else case
-    }).catch(error => console.log(error));
+    const username = this.checkUsernameFormGroup.get('username').value;
+    this.authService.checkUsername(username)
+      .then((res: any) => {
+        if (res.user === 'exists') {
+          this.profileService.getProfileDetails(username)
+            .then(() => {
+              this.sharedService.otpSub.next();
+            }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
+          this.checkUserCompleted = true;
+          this.stepper.next();
+        } else {
+          this.errorHandlerService.showMessage('User does not exist', 'Dismiss');
+        }
+      }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
   checkPass() {
-    this.authService.checkPassword(this.profileService.userProfile.username,this.currentPasswordFormGroup.get('cur_password').value).then((res: any) => {
-      if (res.response === 'match') {
-        this.pwdCheckCompleted = true;
-        this.stepper.next();
-      }
-      // TODO: add error for else case
-    }).catch(error => console.log(error));
+    this.authService.checkPassword(
+      this.profileService.userProfile.username,
+      this.currentPasswordFormGroup.get('cur_password').value)
+      .then((res: any) => {
+        if (res.response === 'match') {
+          this.pwdCheckCompleted = true;
+          this.sharedService.otpSub.next();
+          this.stepper.next();
+        } else {
+          this.errorHandlerService.showMessage('Invalid Password', 'Dismiss');
+        }
+      }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
   changePass() {
     this.authService.changePassword(
       this.profileService.userProfile.username,
       this.resetPasswordFormGroup.get('new_password').value,
-      this.resetPasswordFormGroup.get('cnf_password').value).then((res: any) => {
-      if (res.success === 'Yes') {
-        console.log('success');
-        this.dialogRef.close();
-      }
-      // TODO: add error for else case
-    }).catch(error => console.log(error));
+      this.resetPasswordFormGroup.get('cnf_password').value)
+      .then((res: any) => {
+        if (res.success === 'Yes') {
+          console.log('success');
+          this.dialogRef.close();
+        } else {
+          this.errorHandlerService.showMessage('Operation failed. Try Again!', 'Dismiss');
+        }
+      }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
 }

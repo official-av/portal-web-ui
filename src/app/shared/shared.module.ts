@@ -12,13 +12,14 @@ import {CommonModule} from '@angular/common';
 import {SharedService} from './shared.service';
 import {OtpComponent} from './otp/otp.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ErrorHandlerService} from './error-handler.service';
 
 @NgModule({
   imports: [MaterialModule, FlexLayoutModule, AppRoutingModule, CommonModule, ReactiveFormsModule
   ],
   exports: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent, OtpComponent],
   declarations: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent, OtpComponent],
-  providers: [SharedService]
+  providers: [SharedService, ErrorHandlerService]
 })
 export class SharedModule {
 }

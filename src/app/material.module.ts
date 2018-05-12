@@ -15,6 +15,7 @@ import {
   MatPaginatorModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatStepperModule,
   MatTableModule,
   MatTabsModule,
@@ -41,7 +42,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatGridListModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -62,7 +64,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatGridListModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule {

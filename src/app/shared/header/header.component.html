@@ -1,7 +1,8 @@
 <mat-toolbar fxLayoutGap="50px">
   <div>Parliament Portal</div>
   <div fxFlex class="nav-links" fxLayoutGap="20px" fxLayoutAlign="center center" fxHide.lt-md>
-    <a routerLink="" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Home</a>
+    <a [routerLink]="authService.isAuthenticated()?'home':''" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{'exact':'true'}">Home</a>
     <a *ngIf="authService.isAuthenticated()" routerLink="profile" [routerLinkActive]="'active'"
        [routerLinkActiveOptions]="{'exact':'true'}">Profile</a>
     <a routerLink="about" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">About</a>

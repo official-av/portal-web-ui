@@ -16,6 +16,9 @@ import {ResetPasswordComponent} from './auth/reset-password/reset-password.compo
 import {CoreModule} from './core/core.module';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {InviteComponent} from './core/invite/invite.component';
+import {NgProgressInterceptor, NgProgressModule} from 'ngx-progressbar';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -32,6 +35,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MaterialModule,
     FlexLayoutModule,
     PerfectScrollbarModule,
+    NgProgressModule,
+    ToastModule.forRoot(),
 
     // custom modules
     AppRoutingModule,
@@ -45,7 +50,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    },
+    {provide: HTTP_INTERCEPTORS, useClass: NgProgressInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent, ResetPasswordComponent, InviteComponent]
