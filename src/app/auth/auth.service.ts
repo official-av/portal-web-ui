@@ -14,6 +14,10 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private toastr: ToastsManager) {
     if (this.isAuthenticated()) {
       this.auth_token = localStorage.getItem('authToken');
+      this.verifyToken().then().catch(error => {
+        this.logout();
+        this.toastr.error('Your session has expired, Login Again!', 'Error');
+      });
     } else {
       this.auth_token = null;
     }
@@ -53,6 +57,17 @@ export class AuthService {
 
   isAuthenticated() {
     return localStorage.getItem('authToken') !== null;
+  }
+
+  verifyToken() {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.api_url + 'auth/ver/', {
+        'token': this.auth_token
+      }).subscribe((result: any) => {
+        console.log(result);
+        resolve(result);
+      }, error => reject(error));
+    });
   }
 
 // TODO: get phonenum back from check username
