@@ -101,7 +101,7 @@ export class AuthService {
         'username': uname,
         'password': pwd,
         'confirm_password': cnf_pwd
-      }, {headers: new HttpHeaders().set('Authorization', 'JWT ' + this.auth_token.toString())}).subscribe((result: any) => {
+      }).subscribe((result: any) => {
         console.log(result);
         resolve(result);
         this.toastr.success('Password Changed Successfully', 'Success');
