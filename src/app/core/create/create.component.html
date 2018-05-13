@@ -7,12 +7,22 @@
         <textarea matInput placeholder="Question Content" name="content" [(ngModel)]="question.content"></textarea>
       </mat-form-field>
       <mat-form-field>
+        <input type="text" placeholder="Select a Department" matInput name="dept" [(ngModel)]="dept"
+               (input)="filter($event.target.value)"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let dept of filteredDepts" [value]="dept.name">
+            {{ dept.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!--<mat-form-field>
         <mat-select placeholder="Choose Department" name="dept" [(ngModel)]="question.asked_to">
           <mat-option *ngFor="let dept of depts|async" [value]="dept.id">
             {{ dept.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field>-->
       <mat-form-field>
         <input matInput placeholder="Reply Deadline" [matDatepicker]="picker" name="deadline"
                [(ngModel)]="question.deadline">

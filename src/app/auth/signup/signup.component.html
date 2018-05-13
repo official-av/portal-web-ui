@@ -43,7 +43,7 @@
               <input type="text" placeholder="Select a Department" matInput formControlName="dept"
                      [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let dept of depts|async" [value]="dept.name">
+                <mat-option *ngFor="let dept of filteredDepts|async" [value]="dept.name">
                   {{ dept.name }}
                 </mat-option>
               </mat-autocomplete>
