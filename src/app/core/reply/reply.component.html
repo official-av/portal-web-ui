@@ -2,16 +2,15 @@
   <mat-card class="primary">
     <mat-card-title>Create Reply</mat-card-title>
     <mat-card-subtitle *ngIf="mode==='invited'">
-      Invited by {{question.asked_to}}
+      Invited by {{sharedService.getDeptName(question.asked_to)}}
     </mat-card-subtitle>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
       <form (ngSubmit)="sendReply(f)" #f="ngForm">
         <section>
           <app-question-details [ques]="question"></app-question-details>
         </section>
-        <mat-divider></mat-divider>
         <mat-form-field class="content">
-          <textarea matInput placeholder="Reply" name="answer" [(ngModel)]="reply"></textarea>
+          <textarea matInput placeholder="Reply" name="answer" [(ngModel)]="reply" rows="5"></textarea>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Submit</button>
       </form>
@@ -19,9 +18,10 @@
   </mat-card>
 
   <mat-card class="secondary" *ngIf="mode==='direct'&&question.is_collaborative">
-    <mat-card-title>Available Replies
+    <mat-card-title>Invited Departments
     </mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <p *ngIf="question.collaborations.length===0">No invitations have been sent as of yet!</p>
       <ng-container *ngFor="let collab of question.collaborations;let i=index">
         <div fxLayout="column" fxLayoutGap="10px">
           <app-collab-details [collab]="collab"></app-collab-details>

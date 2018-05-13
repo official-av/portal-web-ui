@@ -31,7 +31,7 @@
               <span *ngFor="let dept of element.collaborations">{{sharedService.getDeptName(dept.invited_dept)}},</span>
             </ng-container>
             <ng-template #invite>
-              <button mat-button color="primary" (click)="modalsService.openInviteModal(element.ques_id)">Invite
+              <button mat-raised-button color="primary" (click)="modalsService.openInviteModal(element.ques_id)">Invite
               </button>
             </ng-template>
           </mat-cell>
@@ -39,7 +39,7 @@
         <ng-container matColumnDef="Details">
           <mat-header-cell *matHeaderCellDef>View</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button mat-button [routerLink]="['/view',Mode.DIRECT,element.ques_id]">View</button>
+            <button mat-raised-button color="primary" [routerLink]="['/view',Mode.DIRECT,element.ques_id]">View</button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="directColumns"></mat-header-row>
@@ -77,7 +77,8 @@
         <ng-container matColumnDef="Details">
           <mat-header-cell *matHeaderCellDef>View</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button mat-button [routerLink]="['/view',Mode.INVITED,element.ques_id]">View</button>
+            <button mat-raised-button color="primary" [routerLink]="['/view',Mode.INVITED,element.ques_id]">View
+            </button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="invitedColumns"></mat-header-row>
@@ -111,7 +112,9 @@
             <ng-container matColumnDef="Details">
               <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <button mat-button [routerLink]="['/view',Mode.ARC_DIRECT,element.ques_id]">View</button>
+                <button mat-raised-button color="primary" [routerLink]="['/view',Mode.ARC_DIRECT,element.ques_id]">
+                  View
+                </button>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="archivedDirectColumns"></mat-header-row>
@@ -149,7 +152,9 @@
             <ng-container matColumnDef="Details">
               <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <button mat-button [routerLink]="['/view',Mode.ARC_INVITED,element.ques_id]">View</button>
+                <button mat-raised-button color="primary" [routerLink]="['/view',Mode.ARC_INVITED,element.ques_id]">
+                  View
+                </button>
               </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="archivedInvitedColumns"></mat-header-row>

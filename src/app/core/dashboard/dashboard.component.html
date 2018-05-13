@@ -1,11 +1,11 @@
-<section fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+<section fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="20px">
   <mat-card>
     <mat-card-title>Direct Questions</mat-card-title>
     <mat-card-subtitle>
-      Questions sent directly to your department
+      Questions that have been asked directly to your department
     </mat-card-subtitle>
     <mat-card-content>
-      <!--<p>lorem ipsum</p>-->
+      <p>Here you can answer questions sent to you directly and/or invite other departments for collaboration.</p>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" [routerLink]="['/questions','direct']">Open</button>
@@ -17,7 +17,7 @@
       Collaborative Questions, sent to you by other departments
     </mat-card-subtitle>
     <mat-card-content>
-      <!--<p>lorem ipsum</p>-->
+      <p>Here you can answer the questions sent to you via invite from other departments for collaboration.</p>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" [routerLink]="['/questions','invited']">Open</button>
@@ -29,7 +29,7 @@
       Questions asked to you that have been already answered
     </mat-card-subtitle>
     <mat-card-content>
-      <!--<p>lorem ipsum</p>-->
+      <p>Here you can view the details for already answered questions, both direct and invited.</p>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" [routerLink]="['/questions','archived']">Open</button>

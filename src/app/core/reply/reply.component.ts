@@ -5,6 +5,7 @@ import {CoreService} from '../core.service';
 import {NgForm} from '@angular/forms';
 import {Mode} from '../enums/mode.enum';
 import {ProfileService} from '../../profile/profile.service';
+import {SharedService} from '../../shared/shared.service';
 
 @Component({
   selector: 'app-reply',
@@ -18,7 +19,8 @@ export class ReplyComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private coreService: CoreService,
-              private profileService: ProfileService
+              private profileService: ProfileService,
+              public sharedService: SharedService
   ) {
     this.mode = this.route.snapshot.params['mode'];
     this.question = this.coreService.currentQues;
