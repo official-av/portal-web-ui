@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Question} from '../models/question.model';
 import {ActivatedRoute} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTab, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
 import {SharedService} from '../../shared/shared.service';
 import {ModalsService} from '../../modals.service';
@@ -15,6 +15,11 @@ import {Mode} from '../enums/mode.enum';
 
 export class QuestionsComponent implements OnInit, AfterViewInit {
   mode: string;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('dirSort') dirSort: MatSort;
+  @ViewChild('invSort') invSort: MatSort;
+  @ViewChild('arcDirSort') arcDirSort: MatSort;
+  @ViewChild('arcInvSort') arcInvSort: MatSort;
   public Mode = Mode;
 
   // data sources
@@ -22,14 +27,15 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   directDataSource = new MatTableDataSource<Question>();
   invitedDataSource = new MatTableDataSource<Question>();
 
-  directColumns = ['Content', 'Asked on', 'Deadline', 'Invited', 'Details'];
-  invitedColumns = ['Content', 'Asked By', 'Asked on', /*'Deadline',*/ 'Details'];
-  archivedDirectColumns = ['Content', 'Asked on', 'Answered on', 'Details'];
-  archivedInvitedColumns = ['Content', 'Asked By', 'Asked on', 'Answered on', 'Details'];
+  directColumns = ['content', 'asked_on', 'deadline', 'Invited', 'Details'];
+  invitedColumns = ['content', 'Asked By', 'asked_on', /*'Deadline',*/ 'Details'];
+  archivedDirectColumns = ['content', 'asked_on', 'answered_on', 'Details'];
+  archivedInvitedColumns = ['content', 'Asked By', 'asked_on', 'answered_on', 'Details'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatPaginator) directPaginator: MatPaginator;
-  @ViewChild(MatPaginator) invitedPaginator: MatPaginator;
+  @ViewChild(MatPaginator) archivedPaginator: MatPaginator;
+  @ViewChild('arcDirTab') arcDirTab: MatTab;
+  @ViewChild('arcInvTab') arcInvTab: MatTab;
 
   constructor(private route: ActivatedRoute,
               public coreService: CoreService,
@@ -81,11 +87,37 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.mode === 'arc_direct' || this.mode === 'arc_invited') {
-      this.dataSource.paginator = this.paginator;
+      this.onTabChange();
+      this.directDataSource.sort = this.arcDirSort;
+      this.invitedDataSource.sort = this.arcInvSort;
     } else {
-      this.directDataSource.paginator = this.directPaginator;
-      this.invitedDataSource.paginator = this.invitedPaginator;
+      if (this.mode === 'invited') {
+        this.dataSource.sort = this.invSort;
+      } else {
+        this.dataSource.sort = this.dirSort;
+      }
+      this.dataSource.paginator = this.paginator;
     }
+  }
+
+  onTabChange() {
+    if (this.arcDirTab.isActive) {
+      this.directDataSource.paginator = this.archivedPaginator;
+    } else {
+      this.invitedDataSource.paginator = this.archivedPaginator;
+    }
+  }
+
+  doFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  doArcDirFilter(filterValue: string) {
+    this.directDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  doArcInvFilter(filterValue: string) {
+    this.invitedDataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

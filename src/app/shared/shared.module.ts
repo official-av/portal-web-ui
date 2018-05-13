@@ -13,12 +13,30 @@ import {SharedService} from './shared.service';
 import {OtpComponent} from './otp/otp.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ErrorHandlerService} from './error-handler.service';
+import {WelcomeComponent} from './welcome/welcome.component';
+import {TypedComponent} from './welcome/typed/typed.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  imports: [MaterialModule, FlexLayoutModule, AppRoutingModule, CommonModule, ReactiveFormsModule
+  imports: [
+    MaterialModule,
+    FlexLayoutModule,
+    AppRoutingModule,
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent, OtpComponent],
-  declarations: [HeaderComponent, FooterComponent, AboutComponent, ContactComponent, HelpComponent, SidenavComponent, OtpComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    AboutComponent,
+    ContactComponent,
+    HelpComponent,
+    SidenavComponent,
+    OtpComponent,
+    WelcomeComponent,
+    TypedComponent,
+    NotFoundComponent],
   providers: [SharedService, ErrorHandlerService]
 })
 export class SharedModule {

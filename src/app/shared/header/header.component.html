@@ -1,7 +1,12 @@
-<mat-toolbar fxLayoutGap="50px">
-  <div>Parliament Portal</div>
-  <div fxFlex class="nav-links" fxLayoutGap="20px" fxLayoutAlign="center center" fxHide.lt-md>
-    <a [routerLink]="authService.isAuthenticated()?'home':''" [routerLinkActive]="'active'"
+<mat-toolbar fxLayoutGap="40px">
+  <img src="../../../assets/images/emblem.png" class="logo mr-10">
+  <div class="nav-links mr-0">
+    <a [routerLink]="authService.isAuthenticated()?'home':''" class="logo-text">Parliament Portal</a>
+  </div>
+  <div fxFlex class="nav-links" [ngClass]="{'mr-custom':authService.isAuthenticated()}" fxLayoutGap="20px"
+       fxLayoutAlign="center center" fxHide.lt-md>
+    <img src="../../../assets/images/par.png" class="logo">
+    <!--<a [routerLink]="authService.isAuthenticated()?'home':''" [routerLinkActive]="'active'"
        [routerLinkActiveOptions]="{'exact':'true'}">Home</a>
     <a *ngIf="authService.isAuthenticated()" routerLink="profile" [routerLinkActive]="'active'"
        [routerLinkActiveOptions]="{'exact':'true'}">Profile</a>
@@ -9,13 +14,23 @@
     <a routerLink="contact" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Contact</a>
     <a routerLink="help" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{'exact':'true'}">Help</a>
     <a mat-button color="primary" routerLink="create" [routerLinkActive]="'active'"
-       [routerLinkActiveOptions]="{'exact':'true'}">Create</a>
+       [routerLinkActiveOptions]="{'exact':'true'}">Create</a>-->
   </div>
   <div class="nav-links" fxLayoutAlign="end" fxLayoutGap="10px" fxHide.lt-md>
     <a *ngIf="!authService.isAuthenticated()" (click)="modalService.openLoginModal()">Login</a>
     <a *ngIf="!authService.isAuthenticated()" routerLink="register" [routerLinkActive]="'active'"
        [routerLinkActiveOptions]="{'exact':'true'}">Register</a>
-    <a *ngIf="authService.isAuthenticated()" (click)="authService.logout()">Logout</a>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item routerLink="home">Home</button>
+      <button mat-menu-item routerLink="profile">Profile</button>
+      <button mat-menu-item (click)="authService.logout()">Logout</button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="authService.isAuthenticated()" matTooltip="Click Me!"
+            [matTooltipPosition]="'before'">
+      <!--{{profileService.userProfile.first_name}}-->
+      <mat-icon>account_circle</mat-icon>
+    </button>
   </div>
   <div fxFlex fxLayoutAlign="end" fxHide.gt-sm>
     <button mat-icon-button (click)="toggleSidenav()">

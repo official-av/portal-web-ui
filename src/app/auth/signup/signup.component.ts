@@ -7,6 +7,7 @@ import {SharedService} from '../../shared/shared.service';
 import {Dept} from '../../core/models/dept.model';
 import {Observable} from 'rxjs/Observable';
 import {ErrorHandlerService} from '../../shared/error-handler.service';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -18,15 +19,14 @@ export class SignupComponent implements OnInit {
   // contains firstname,lastname,email and contact
   secondFormGroup: FormGroup;
   // contains username,dept
-  depts: Observable<Dept[]>;
+  depts: Dept[];
+  filteredDepts: Observable<Dept[]>;
 
-  // filteredDepts: Observable<any[]>;
-  // TODO: Add filtering for auto-complete
   constructor(private authService: AuthService,
               private modalsService: ModalsService,
               private sharedService: SharedService,
               private errorHandlerService: ErrorHandlerService) {
-    this.depts = this.sharedService.getDeptList();
+
   }
 
   ngOnInit() {
@@ -44,13 +44,16 @@ export class SignupComponent implements OnInit {
         /*, this.confirmPasswordValidator2.bind(this)*/]),
       'cnf_password': new FormControl(null, [Validators.required, Validators.minLength(8), this.confirmPasswordValidator.bind(this)]),
     });
-    /*this.filteredDepts = this.secondFormGroup.controls['dept'].valueChanges
-      .pipe(startWith(''), map(val => this.filter(val)));*/
+    this.sharedService.getDeptList().subscribe((value: Dept[]) => {
+      this.depts = value;
+      this.filteredDepts = this.secondFormGroup.controls['dept'].valueChanges
+        .pipe(startWith(''), map(val => this.filter(val)));
+    });
   }
 
-  /*filter(val: string): string[] {
-    return this.depts.filter(dept => dept.indexOf(val) === 0);
-  }*/
+  filter(val: string): Dept[] {
+    return this.depts.filter(dept => dept.name.toLowerCase().includes(val.toLowerCase()));
+  }
 
   // TODO: Optimize - create seperate pwd + cnf pwd component?
   confirmPasswordValidator(control: FormControl): { [s: string]: boolean } {

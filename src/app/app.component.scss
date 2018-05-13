@@ -11,7 +11,7 @@ mat-sidenav-container {
 }
 
 .container {
-  padding: 70px 20px 20px 20px;
+  padding: 100px 20px 20px 20px;
   position: relative;
   height: calc(100vh - 40px);
   width: auto;
@@ -25,4 +25,8 @@ mat-sidenav-container {
 .mobile-container {
   padding: 66px 5px 10px 5px;
   height: calc(100vh - 40px);
+}
+
+.custom-padding {
+  padding: 50px 0 0 0 !important;
 }

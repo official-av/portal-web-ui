@@ -1,14 +1,15 @@
-<section *ngIf="collab" fxLayout="column" fxLayoutGap="20px">
-  <p>Asked On : {{collab.asked_on}}</p>
-  <p>
-    Asked to:{{sharedService.getDeptName(collab.invited_dept)}}
-  </p>
-  <p *ngIf="collab.rec_answer;else deadline">Answered on: {{collab.answered_on}}</p>
-  <ng-template #deadline>
-    <p>Deadline : {{collab.deadline}}</p>
-  </ng-template>
-
-  <p *ngIf="collab.rec_answer">
-    Answer:{{collab.rec_answer}}
-  </p>
-</section>
+<mat-card *ngIf="collab" fxLayout="column" fxLayoutGap="20px">
+  <mat-card-title><h6>Depatment : {{sharedService.getDeptName(collab.invited_dept)}}</h6></mat-card-title>
+  <mat-card-subtitle>
+    Asked On : {{collab.asked_on|date:'short'}}
+  </mat-card-subtitle>
+  <mat-card-content>
+    <p *ngIf="collab.rec_answer;else deadline"><b>Answered on : </b>{{collab.answered_on}}</p>
+    <ng-template #deadline>
+      <p><b>Not answered yet!</b></p>
+    </ng-template>
+    <p *ngIf="collab.rec_answer">
+      <b>Answer : </b>{{collab.rec_answer}}
+    </p>
+  </mat-card-content>
+</mat-card>

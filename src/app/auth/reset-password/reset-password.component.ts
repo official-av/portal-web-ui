@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatStepper} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatStep, MatStepper} from '@angular/material';
 import {AuthService} from '../auth.service';
 import {ProfileService} from '../../profile/profile.service';
 import {SharedService} from '../../shared/shared.service';
@@ -20,6 +20,8 @@ export class ResetPasswordComponent implements OnInit {
   currentPasswordFormGroup: FormGroup;
   resetPasswordFormGroup: FormGroup;
   @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('otpStep') otpStep: MatStep;
+  @ViewChild('checkUserStep') checkUserStep: MatStep;
 
   // TODO: Fix step complete issue (bug click two times on otp submit)
 
@@ -60,17 +62,17 @@ export class ResetPasswordComponent implements OnInit {
     const username = this.checkUsernameFormGroup.get('username').value;
     this.authService.checkUsername(username)
       .then((res: any) => {
-        if (res.user === 'exists') {
-          this.profileService.getProfileDetails(username)
-            .then(() => {
-              this.sharedService.otpSub.next();
-            }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
-          this.checkUserCompleted = true;
+        if (res.user !== 'does not exists') {
+          this.profileService.userProfile.username = username;
+          this.profileService.userProfile.phonenum = Number(res.user);
+          this.checkUserStep.completed = true;
           this.stepper.next();
         } else {
           this.errorHandlerService.showMessage('User does not exist', 'Dismiss');
         }
-      }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
+      })
+      .then(() => this.sharedService.otpSub.next())
+      .catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
   }
 
   checkPass() {
@@ -101,6 +103,11 @@ export class ResetPasswordComponent implements OnInit {
           this.errorHandlerService.showMessage('Operation failed. Try Again!', 'Dismiss');
         }
       }).catch(error => this.errorHandlerService.showError(error, 'Dismiss'));
+  }
+
+  otpDone(val: boolean) {
+    this.otpStep.completed = val;
+    this.stepper.next();
   }
 
 }

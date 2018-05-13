@@ -8,11 +8,13 @@ import {ViewQuestionComponent} from './questions/view-question/view-question.com
 import {RouterModule} from '@angular/router';
 import {CoreService} from './core.service';
 import {ReplyComponent} from './reply/reply.component';
-import {InviteComponent} from './invite/invite.component';
 import {CreateComponent} from './create/create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {QuestionDetailsComponent} from './questions/question-details/question-details.component';
 import {CollabDetailsComponent} from './reply/collab-details/collab-details.component';
+import {CoreRoutingModule} from './core-routing.module';
+import {SharedModule} from '../shared/shared.module';
+import {InviteComponent} from './invite/invite.component';
 
 @NgModule({
   imports: [
@@ -21,10 +23,20 @@ import {CollabDetailsComponent} from './reply/collab-details/collab-details.comp
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreRoutingModule,
+    SharedModule
   ],
   exports: [],
-  declarations: [DashboardComponent, QuestionsComponent, ViewQuestionComponent, ReplyComponent, InviteComponent, CreateComponent, QuestionDetailsComponent, CollabDetailsComponent],
+  declarations: [
+    DashboardComponent,
+    QuestionsComponent,
+    ViewQuestionComponent,
+    ReplyComponent,
+    CreateComponent,
+    QuestionDetailsComponent,
+    CollabDetailsComponent,
+    InviteComponent],
   providers: [CoreService]
 })
 export class CoreModule {

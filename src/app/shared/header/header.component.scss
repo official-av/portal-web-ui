@@ -1,6 +1,19 @@
 @import "../../../variables";
 
 mat-toolbar {
+  .mr-10 {
+    margin-right: 10px !important;
+  }
+  .mr-0 {
+    margin-right: 0 !important;
+  }
+  .mr-custom {
+    margin-right: 135px !important;
+  }
+  .logo {
+    margin: 5px 0;
+    height: 40px;
+  }
   background-color: white;
   position: fixed;
   top: 0;

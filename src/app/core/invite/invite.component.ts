@@ -5,7 +5,6 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatChipEvent, MatDialogRef} from '@angular/material';
 import {CollaboratedAnswer} from '../models/collaborated-answer.model';
 import {SharedService} from '../../shared/shared.service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-invite',
@@ -13,10 +12,10 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./invite.component.scss']
 })
 export class InviteComponent implements OnInit {
-  depts: Observable<Dept[]>;
+  depts: Dept[];
   quesId: string;
   selectedDepts: Dept[];
-  // filteredDepts: Observable<any[]>;
+  filteredDepts: Dept[];
   inviteForm: FormGroup;
   invites: CollaboratedAnswer[];
 
@@ -28,23 +27,35 @@ export class InviteComponent implements OnInit {
     console.log(this.quesId);
     this.selectedDepts = [];
     this.invites = [];
-    this.depts = this.sharedService.getDeptList();
   }
 
   ngOnInit() {
     this.inviteForm = new FormGroup({
       dept: new FormControl(null)
     });
-    /*this.filteredDepts = this.inviteForm.controls['dept'].valueChanges
-      .pipe(startWith(''), map(val => this.filter(val)));*/
+    this.sharedService.getDeptList().subscribe((value: Dept[]) => {
+      this.depts = value;
+    }/*, error => {
+    }, () => {
+      this.filteredDepts = this.inviteForm.controls['dept'].valueChanges
+        .pipe(startWith(''), map(val => this.filter(val)));
+    }*/);
   }
 
-  /* filter(val: string): string[] {
-     return this.depts.filter(dept => dept.indexOf(val) === 0);
-   }*/
+  filter(val: string) {
+    this.filteredDepts = this.depts.filter(dept => {
+      return dept.name.toLowerCase().includes(val.toLowerCase());
+    });
+  }
+
+  checkPresence(dept: Dept) {
+    return this.selectedDepts.find(value => value.id === dept.id) === undefined;
+  }
 
   onDeptSelect(data: MatAutocompleteSelectedEvent) {
+    console.log(data.option.value);
     this.selectedDepts.push(data.option.value);
+    console.log(this.selectedDepts);
     this.inviteForm.reset();
   }
 
