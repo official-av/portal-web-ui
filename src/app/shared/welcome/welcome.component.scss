@@ -1,0 +1,30 @@
+.landing {
+  overflow: hidden;
+  width: 100vw;
+  position: relative;
+  z-index: 5;
+  height: calc(100vh - 90px);
+  background-size: cover;
+  background-image: url("../../../assets/images/bg.jpg");
+  background-position: center;
+  .sub {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+mat-card {
+  margin: 5% 10%;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.7686274509803922);
+}
+
+::ng-deep .container {
+  padding: 50px 0 0 0 !important;
+}
+
+::ng-deep .mobile-container {
+  padding: 50px 0 0 0 !important;
+}

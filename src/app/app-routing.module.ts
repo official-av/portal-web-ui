@@ -10,8 +10,13 @@ import {QuestionsComponent} from './core/questions/questions.component';
 import {CreateComponent} from './core/create/create.component';
 import {ReplyComponent} from './core/reply/reply.component';
 import {ViewQuestionComponent} from './core/questions/view-question/view-question.component';
+import {WelcomeComponent} from './shared/welcome/welcome.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: WelcomeComponent
+  },
   {
     path: 'contact',
     component: ContactComponent
