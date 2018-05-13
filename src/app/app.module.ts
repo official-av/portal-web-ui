@@ -13,12 +13,12 @@ import {ModalsService} from './modals.service';
 import {LoginComponent} from './auth/login/login.component';
 import {ProfileModule} from './profile/profile.module';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
-import {CoreModule} from './core/core.module';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {InviteComponent} from './core/invite/invite.component';
 import {NgProgressInterceptor, NgProgressModule} from 'ngx-progressbar';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {CoreModule} from './core/core.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

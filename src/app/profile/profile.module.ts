@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProfileService} from './profile.service';
 import {HttpClientModule} from '@angular/common/http';
+import {ProfileRoutingModule} from './profile-routing.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {HttpClientModule} from '@angular/common/http';
     FlexLayoutModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ProfileRoutingModule
   ],
   exports: [],
   declarations: [ProfileviewComponent],

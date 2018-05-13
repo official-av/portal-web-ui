@@ -5,7 +5,10 @@
   <mat-sidenav-content>
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <ng-progress [showSpinner]="false" [color]="'#FFA726'"></ng-progress>
-    <div class="container" ngClass.xs="mobile-container" fxLayoutAlign="center space-around">
+    <div class="container" [ngStyle]="{'padding':router.url==='/'?'50px 0 0 0':'100px 20px 20px 20px'}"
+         [ngStyle.lt-md]="{'padding':router.url==='/'?'50px 0 0 0':'66px 5px 10px 5px'}"
+         ngClass.xs="mobile-container"
+         fxLayoutAlign="center space-around">
       <perfect-scrollbar>
         <router-outlet></router-outlet>
       </perfect-scrollbar>
