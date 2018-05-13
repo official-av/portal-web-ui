@@ -1,7 +1,7 @@
 <mat-toolbar fxLayoutGap="40px">
   <img src="../../../assets/images/emblem.png" class="logo mr-10">
   <div class="nav-links mr-0">
-    <span class="logo-text">Parliament Portal</span>
+    <a [routerLink]="authService.isAuthenticated()?'home':''" class="logo-text">Parliament Portal</a>
   </div>
   <div fxFlex class="nav-links mr-custom" fxLayoutGap="20px" fxLayoutAlign="center center" fxHide.lt-md>
     <img src="../../../assets/images/par.png" class="logo">
