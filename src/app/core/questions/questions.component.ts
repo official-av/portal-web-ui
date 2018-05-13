@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Question} from '../models/question.model';
 import {ActivatedRoute} from '@angular/router';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {CoreService} from '../core.service';
 import {SharedService} from '../../shared/shared.service';
 import {ModalsService} from '../../modals.service';
@@ -15,6 +15,7 @@ import {Mode} from '../enums/mode.enum';
 
 export class QuestionsComponent implements OnInit, AfterViewInit {
   mode: string;
+  @ViewChild(MatSort) sort: MatSort;
   public Mode = Mode;
 
   // data sources
@@ -80,6 +81,7 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
     if (this.mode === 'arc_direct' || this.mode === 'arc_invited') {
       this.dataSource.paginator = this.paginator;
     } else {

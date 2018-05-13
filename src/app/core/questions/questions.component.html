@@ -4,7 +4,7 @@
   </mat-card-title>
   <mat-card-content>
     <section class="direct" *ngIf="mode===Mode.DIRECT">
-      <mat-table [dataSource]="dataSource">
+      <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Content">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
           <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
@@ -46,17 +46,17 @@
     <section class="invited" *ngIf="mode===Mode.INVITED">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="Content">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Content</mat-header-cell>
           <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="Asked By">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Asked By</mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{sharedService.getDeptName(element.asked_to)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Asked on">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>Asked on</mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{element.asked_on | date:'short'}}
           </mat-cell>
@@ -68,7 +68,7 @@
           </mat-cell>
         </ng-container>-->
         <ng-container matColumnDef="Details">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>View</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>View</mat-header-cell>
           <mat-cell *matCellDef="let element">
             <button mat-button [routerLink]="['/view',Mode.INVITED,element.ques_id]">View</button>
           </mat-cell>
@@ -82,23 +82,23 @@
         <mat-tab label="Archived Direct">
           <mat-table [dataSource]="directDataSource">
             <ng-container matColumnDef="Content">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Content</mat-header-cell>
               <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="Asked on">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Asked on</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{element.asked_on | date:'short'}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Answered on">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Answered on</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Answered on</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{element.answered_on | date:'short'}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Details">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button mat-button [routerLink]="['/view',Mode.ARC_DIRECT,element.ques_id]">View</button>
               </mat-cell>
@@ -113,29 +113,29 @@
         <mat-tab label="Archived Invited">
           <mat-table [dataSource]="invitedDataSource">
             <ng-container matColumnDef="Content">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Content</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Content</mat-header-cell>
               <mat-cell *matCellDef="let element">{{element.content}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="Asked By">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked By</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Asked By</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{sharedService.getDeptName(element.asked_to)}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Asked on">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Asked on</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Asked on</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{element.asked_on | date:'short'}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Answered on">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Answered on</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Answered on</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{element.answered_on | date:'short'}}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Details">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button mat-button [routerLink]="['/view',Mode.ARC_INVITED,element.ques_id]">View</button>
               </mat-cell>
